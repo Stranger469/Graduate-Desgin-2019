@@ -76,20 +76,24 @@ export default {
       font-size: 14px;
       margin: 0 20px;
       cursor: pointer;
-      transition: color linear .2s;
       user-select: none;
-      &:hover {
-        color: @site-main;
+      &>a {
+        transition: color linear .1s;
+        &:hover, &:active {
+          color: @site-main;
+        }
+        &.with-border {
+          transition: color linear .1s;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 25px;
+          width: 50px;
+          border: 1px solid @site-main;
+          border-radius: 20px;
+        }
       }
-      &>a.with-border {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 25px;
-        width: 50px;
-        border: 1px solid @site-main;
-        border-radius: 20px;
-      }
+
     }
   }
 }
