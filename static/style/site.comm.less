@@ -1,8 +1,204 @@
+@import url(./site.vars.less);
 *{
   margin: 0;
   padding: 0;
 }
-body, html {
-  height: 100%;
+.clearfix{
+  &:after{
+    content: "";
+    visibility: hidden;
+    display: block;
+    clear: both;
+    height: 0;
+  }
+}
+body{
+  margin: 0;
+  padding: 0;
+}
+a{
+  text-decoration: none;
+}
+li{
+  list-style: none;
+}
+h1,h2,h3,h4,h5,h6{
+  font-weight:normal;
+}
+a,input,select,button,span,label,div,textarea{
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+  -moz-tap-highlight-color:rgba(0,0,0,0);
+  -mz-tap-highlight-color:rgba(0,0,0,0);
+  -o-tap-highlight-color:rgba(0,0,0,0);
+}
+input,select,button,span,label{
+  outline: none; border:none;
+}
+textarea{
+  resize: none;
+}
+em,i{
+  font-style:normal;
+}
+b{
+  font-weight:normal;
+}
+html,body{
+  height:100%;
+}
+input {
+  padding: 7px;
+  font-size: 12px;
+  // default width
+  width: 180px;
+  border: 0.5px solid rgb(209, 209, 209);
+  &:focus {
+    transition: all 0.7s ease;
+    border-color: rgb(78, 138, 207);
+    box-shadow: 0 0 0.5px rgb(78, 138, 207);
+  }
+}
+// 按钮，分为棱角正方形和圆角矩形，圆角矩形有两种，primary和plain（朴素按钮）
+.btn {
   box-sizing: border-box;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  width: 80px;
+  height: 35px;
+  text-align: center;
+  &.square {
+    height: 30px;
+    border: 1px solid #c3c3c3;
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 5px;
+    background: #fff;
+    &:hover {
+      background: #f3f3f3;
+    }
+  }
+  &.default {
+    border: 0.5px solid rgb(78, 138, 207);
+    border-radius: 5px;
+    color: rgb(78, 138, 207);
+    padding: 7px 10px;
+    font-size: 14px;
+  }
+  &.primary {
+    border-radius: 5px;
+    color: #fff;
+    background: rgb(78, 138, 207);
+    padding: 7px 10px;
+    font-size: 14px;
+    &.disable {
+      background: #afafaf;
+      cursor: not-allowed;
+      &:hover {
+        opacity: 1;
+      }
+      &:active {
+        background: #afafaf;
+        opacity: 1;
+      }
+    }
+    &:hover {
+      opacity: 0.8;
+    }
+    &:active {
+      background: rgb(21, 105, 201);
+      opacity: 1;
+    }
+  }
+  &.plain {
+    background: #e4e4e4;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    color: #9E9E9E;
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 14px;
+    &.disable {
+      background: #afafaf;
+      cursor: not-allowed;
+      &:hover {
+        background: #afafaf;
+        border-color: #cccccc;
+        color: #9E9E9E;
+      }
+    }
+    &.chosen {
+      background: #fff;
+      border-color: @site-main;
+      color: @site-main;
+    }
+    &:hover {
+      background: #fff;
+      border-color: @site-main;
+      color: @site-main;
+    }
+  }
+}
+
+// form
+form {
+  padding: 40px 10px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  box-sizing: border-box;
+  &.horizontal {
+    height: 55px;
+    padding: 0 30px;
+    display: block;
+    text-align: left;
+    width: 100%;
+    .form-item {
+      display: inline-block;
+      margin: 10px 10px;
+      label {
+        position: relative;
+        font-size: 14px;
+        display: inline-block;
+        margin-right: 15px;
+        margin-top: 5px;
+        &.require:before {
+          color: red;
+          content: '*';
+          font-size: 7px;
+          position: absolute;
+          top: 3px;
+          left: -7px;
+          font-weight: lighter;
+        }
+      }
+    }
+  }
+  .form-item {
+    box-sizing: border-box;
+    margin: 20px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    border-style: none;
+    label {
+      position: relative;
+      font-size: 14px;
+      display: inline-block;
+      margin-right: 15px;
+      margin-top: 5px;
+      text-align: left;
+      &.require:before {
+        color: red;
+        content: '*';
+        font-size: 7px;
+        position: absolute;
+        top: 3px;
+        left: -7px;
+        font-weight: lighter;
+      }
+    }
+  }
 }

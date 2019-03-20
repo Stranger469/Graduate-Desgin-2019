@@ -1,6 +1,7 @@
 <template>
   <div>
     <MainHeader/>
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -19,5 +20,6 @@ export default {
 };
 </script>
 <style lang="less">
-
+@import url(../../static/style/site.comm.less);
+@import url(../../static/style/site.vars.less);
 </style>
