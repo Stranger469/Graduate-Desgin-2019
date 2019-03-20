@@ -4,7 +4,7 @@
       <div class="m-header-container-left">
         <a class="icon" href="#/"><img height="40" src="../../assets/img/logo.png"></a>
         <ul>
-          <li><a :href="'#/'">首页</a></li>
+          <li><a href="#/">首页</a></li>
           <li><a>职位</a></li>
           <li><a>公司</a></li>
         </ul>
@@ -13,7 +13,7 @@
         <ul>
           <li><a>我要招聘</a></li>
           <li><a class="with-border">注册</a></li>
-          <li style="margin-left:0"><a class="with-border" :href="'#/login'">登录</a></li>
+          <li style="margin-left:0"><a class="with-border" href="#/login">登录</a></li>
         </ul>
       </div>
     </div>
