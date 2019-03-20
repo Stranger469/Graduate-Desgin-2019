@@ -10,9 +10,9 @@
         </div>
       </div>
       <div class="form-item">
-        <label class="form-item-left">图形验证码:</label>
+        <label class="form-item-left"></label>
         <div class="form-item-right gvc-container">
-          <input class="gvc" type="text" v-model="graphicVerifyCode" placeholder="图形验证码">
+          <input class="gvc" type="text" v-model="graphicVerifyCode" placeholder="验证码">
           <img width="80" height="30">
           <div class="wrong">{{ gvcWrong }}</div>
         </div>
@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="form-item">
-        <div class="btn primary submit">登录</div>
+        <div class="btn primary submit" @click="submit" @keyup.enter="submit">登录</div>
       </div>
     </form>
   </div>
@@ -40,7 +40,7 @@ export default {
       tel: '',
       graphicVerifyCode: '',
       SNSverifyCode: '',
-      sendMsg: '发送验证码',
+      sendMsg: '已发送(60s)', // 发送验证码/倒计时
       // 手机号/图形验证码/短信验证码出错
       telWrong: '出错了',
       gvcWrong: '出错了',
@@ -48,7 +48,9 @@ export default {
     };
   },
   methods: {
-
+    submit() {
+      // submit
+    },
   },
   components: {
   },
@@ -90,7 +92,8 @@ export default {
     }
     .send {
       position: absolute;
-      width: 60px;
+      width: 70px;
+      text-align: center;
       top: 6px;
       right: 10px;
       font-size: 10px;

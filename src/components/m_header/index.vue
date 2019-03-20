@@ -5,7 +5,7 @@
         <a class="icon" href="#/"><img height="40" src="../../assets/img/logo.png"></a>
         <ul>
           <li><a href="#/">首页</a></li>
-          <li><a>职位</a></li>
+          <li><a>测评</a></li>
           <li><a>公司</a></li>
         </ul>
       </div>
@@ -77,6 +77,9 @@ export default {
       margin: 0 20px;
       cursor: pointer;
       user-select: none;
+      &:hover, &:active {
+        color: @site-main !important;
+      }
       &>a {
         transition: color linear .1s;
         &:hover, &:active {
