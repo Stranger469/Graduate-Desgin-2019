@@ -21,7 +21,10 @@
         <label class="form-item-left">短信验证码:</label>
         <div class="form-item-right">
           <input type="text" v-model="SNSverifyCode" placeholder="短信验证码">
-          <div role="button" class="send" :class="{disable: countdown}">{{ sendMsg }}</div>
+          <div
+            role="button"
+            class="send" :class="{disable: countdown}"
+            @click="sendMsgFn">{{ sendMsg }}</div>
           <div class="wrong">{{ snsWrong }}</div>
         </div>
       </div>
@@ -41,8 +44,8 @@ export default {
       graphicVerifyCode: '',
       SNSverifyCode: '',
       // 发送验证码/倒计时
-      sendMsg: '已发送(60s)',
-      countdown: true,
+      sendMsg: '发送验证码',
+      countdown: false,
       // 手机号/图形验证码/短信验证码出错
       telWrong: '出错了',
       gvcWrong: '出错了',
@@ -50,8 +53,26 @@ export default {
     };
   },
   methods: {
+    sendMsgFn() {
+      if (this.countdown) {
+        return;
+      }
+      // TODO: 发送验证码逻辑
+      let seconds = 10;
+      this.sendMsg = `已发送(${seconds}s)`;
+      this.countdown = true;
+      const interval = setInterval(() => {
+        seconds -= 1;
+        this.sendMsg = `已发送(${seconds}s)`;
+        if (seconds === 0) {
+          clearInterval(interval);
+          this.sendMsg = '重新发送';
+          this.countdown = false;
+        }
+      }, 1000);
+    },
     submit() {
-      // submit
+      // TODO: submit
     },
   },
   components: {
