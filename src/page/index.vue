@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 100%">
     <MainHeader/>
     <router-view></router-view>
   </div>
@@ -22,4 +22,5 @@ export default {
 <style lang="less">
 @import url(../../static/style/site.comm.less);
 @import url(../../static/style/site.vars.less);
+
 </style>

@@ -37,6 +37,7 @@ export default {
   width: 100%;
   height: 50px;
   background: @site-black;
+  position: fixed;
   .m-header-container {
     width: 1000px;
     height: 100%;

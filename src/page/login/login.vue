@@ -143,18 +143,20 @@ export default {
 </script>
 <style lang="less">
   @import url(../../../static/style/site.vars.less);
-
   .login {
     text-align: center;
     user-select: none;
+    height: 100%;
+    background: url(../../assets/img/newbg.png) center bottom no-repeat;
     & > p {
-      margin-top: 50px;
+      padding-top: 150px;
       font-size: 30px;
       color: @site-main;
     }
     & > form {
       box-sizing: border-box;
-      border: 1px solid @site-main;
+      border-radius: 20px;
+      box-shadow: 0px 10px 30px rgb(78, 138, 207);
       width: 500px;
       margin-top: 50px;
       background: #fff;
