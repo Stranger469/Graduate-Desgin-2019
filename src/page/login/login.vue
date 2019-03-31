@@ -36,7 +36,7 @@
   </div>
 </template>
 <script>
-import axios from 'axios';
+import api from '@/api/login';
 
 export default {
   name: 'Login',
@@ -62,7 +62,7 @@ export default {
   },
   mounted() {
     const that = this;
-    axios.get('http://localhost:8080/auth/getImgValidate', {}).then((response) => {
+    api.getImgValidate({}).then((response) => {
       // console.log(response);
       // console.log(response.data.data.base64);
       // console.log(response.data.data.id);
@@ -84,11 +84,17 @@ export default {
         return;
       }
       // 判断图形验证码是否正确
-      axios.get(`http://localhost:8080/auth/validateImg?id=${that.$data.imgid}&code=${that.$data.graphicVerifyCode}`, {}).then((response) => {
+      api.validateImg({
+        id: that.$data.imgid,
+        code: that.$data.graphicVerifyCode,
+      }).then((response) => {
         // 如果正确则发送短信验证码
         if (response.data.data === true) {
           that.$data.display2 = false;
-          axios.get(`http://localhost:8080/auth/getPhoneValidate?phone=${that.$data.tel}&type=1`, {}).then((res) => {
+          api.getPhoneValidate({
+            phone: that.$data.tel,
+            type: 1,
+          }).then((res) => {
             that.$data.phoneid = res.data.data;
             // console.log(res);
             let seconds = 10;
@@ -112,17 +118,17 @@ export default {
     },
     submit() {
       const that = this;
-      const params = new URLSearchParams();
-      params.append('id', that.$data.phoneid);
-      params.append('code', that.$data.SNSverifyCode);
-      params.append('username', that.$data.tel);
       // 判断手机验证码是否正确，错误则显示手机验证码错误
-      axios.post('http://localhost:8080/auth/candidateLoginByPhone', params, {}).then((response) => {
+      api.candidateLoginByPhone({
+        id: that.$data.phoneid,
+        code: that.$data.SNSverifyCode,
+        username: that.$data.tel,
+      }).then((response) => {
         // console.log(response);
         if (response.data.code === 400) {
           that.$data.display3 = true;
         } else {
-          alert('登陆成功');
+          this.$alert('登陆成功');
           // console.log(response);
           // TODO 这里存放一个全局变量，将TOKEN存入
         }
