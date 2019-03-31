@@ -36,102 +36,101 @@
   </div>
 </template>
 <script>
-  import axios from 'axios';
+import axios from 'axios';
 
-  export default {
-    name: 'Login',
-    data() {
-      return {
-        imgpath: '',
-        imgid: '',
-        phoneid: '',
-        tel: '',
-        graphicVerifyCode: '',
-        SNSverifyCode: '',
-        // 发送验证码/倒计时
-        sendMsg: '发送验证码',
-        countdown: false,
-        // 手机号/图形验证码/短信验证码出错
-        telWrong: '手机号不合法',
-        gvcWrong: '验证码输入错误',
-        snsWrong: '验证码输入错误',
-        display1: false,
-        display2: false,
-        display3: false,
-      };
-    },
-    mounted() {
-      let that = this;
-      axios.get('http://localhost:8080/auth/getImgValidate', {}).then(function (response) {
-        console.log(response);
-        console.log(response.data.data.base64);
-        console.log(response.data.data.id);
-        that.$data.imgpath = response.data.data.base64;
-        that.$data.imgid = response.data.data.id;
+export default {
+  name: 'Login',
+  data() {
+    return {
+      imgpath: '',
+      imgid: '',
+      phoneid: '',
+      tel: '',
+      graphicVerifyCode: '',
+      SNSverifyCode: '',
+      // 发送验证码/倒计时
+      sendMsg: '发送验证码',
+      countdown: false,
+      // 手机号/图形验证码/短信验证码出错
+      telWrong: '手机号不合法',
+      gvcWrong: '验证码输入错误',
+      snsWrong: '验证码输入错误',
+      display1: false,
+      display2: false,
+      display3: false,
+    };
+  },
+  mounted() {
+    const that = this;
+    axios.get('http://localhost:8080/auth/getImgValidate', {}).then((response) => {
+      // console.log(response);
+      // console.log(response.data.data.base64);
+      // console.log(response.data.data.id);
+      that.$data.imgpath = response.data.data.base64;
+      that.$data.imgid = response.data.data.id;
+    });
+  },
+  methods: {
+    sendMsgFn() {
+      // 简单逻辑：如果手机号长度小于11位，则显示手机号错误
+      if (this.$data.tel.length < 11) {
+        this.$data.display1 = true;
+        return;
+      }
+      this.$data.display1 = false;
+
+      const that = this;
+      if (this.countdown) {
+        return;
+      }
+      // 判断图形验证码是否正确
+      axios.get(`http://localhost:8080/auth/validateImg?id=${that.$data.imgid}&code=${that.$data.graphicVerifyCode}`, {}).then((response) => {
+        // 如果正确则发送短信验证码
+        if (response.data.data === true) {
+          that.$data.display2 = false;
+          axios.get(`http://localhost:8080/auth/getPhoneValidate?phone=${that.$data.tel}&type=1`, {}).then((res) => {
+            that.$data.phoneid = res.data.data;
+            // console.log(res);
+            let seconds = 10;
+            that.$data.sendMsg = `已发送(${seconds}s)`;
+            that.$data.countdown = true;
+            const interval = setInterval(() => {
+              seconds -= 1;
+              that.$data.sendMsg = `已发送(${seconds}s)`;
+              if (seconds === 0) {
+                clearInterval(interval);
+                that.$data.sendMsg = '重新发送';
+                that.$data.countdown = false;
+              }
+            }, 1000);
+          });
+          // 如果错误则显示图形验证码错误
+        } else {
+          that.$data.display2 = true;
+        }
       });
     },
-    methods: {
-      sendMsgFn() {
-        //简单逻辑：如果手机号长度小于11位，则显示手机号错误
-        if (this.$data.tel.length < 11) {
-          this.$data.display1 = true;
-          return;
+    submit() {
+      const that = this;
+      const params = new URLSearchParams();
+      params.append('id', that.$data.phoneid);
+      params.append('code', that.$data.SNSverifyCode);
+      params.append('username', that.$data.tel);
+      // 判断手机验证码是否正确，错误则显示手机验证码错误
+      axios.post('http://localhost:8080/auth/candidateLoginByPhone', params, {}).then((response) => {
+        // console.log(response);
+        if (response.data.code === 400) {
+          that.$data.display3 = true;
         } else {
-          this.$data.display1 = false;
+          alert('登陆成功');
+          // console.log(response);
+          // TODO 这里存放一个全局变量，将TOKEN存入
         }
-        let that = this;
-        if (this.countdown) {
-          return;
-        }
-        //判断图形验证码是否正确
-        axios.get('http://localhost:8080/auth/validateImg?id=' + that.$data.imgid + "&code=" + that.$data.graphicVerifyCode, {}).then(function (response) {
-          //如果正确则发送短信验证码
-          if (response.data.data === true) {
-            that.$data.display2 = false;
-            axios.get('http://localhost:8080/auth/getPhoneValidate?phone=' + that.$data.tel + "&type=1", {}).then(function (response) {
-              that.$data.phoneid = response.data.data;
-              console.log(response);
-              let seconds = 10;
-              that.$data.sendMsg = `已发送(${seconds}s)`;
-              that.$data.countdown = true;
-              const interval = setInterval(() => {
-                seconds -= 1;
-                that.$data.sendMsg = `已发送(${seconds}s)`;
-                if (seconds === 0) {
-                  clearInterval(interval);
-                  that.$data.sendMsg = '重新发送';
-                  that.$data.countdown = false;
-                }
-              }, 1000);
-            });
-            //如果错误则显示图形验证码错误
-          } else {
-            that.$data.display2 = true;
-          }
-        });
-      },
-      submit() {
-        let that = this;
-        let params = new URLSearchParams();
-        params.append("id", that.$data.phoneid);
-        params.append("code", that.$data.SNSverifyCode);
-        params.append("username", that.$data.tel);
-        //判断手机验证码是否正确，错误则显示手机验证码错误
-        axios.post('http://localhost:8080/auth/candidateLoginByPhone', params, {}).then(function (response) {
-          console.log(response);
-          if(response.data.code === 400) {
-            that.$data.display3 = true;
-          }
-          else {
-            alert("登陆成功");
-            console.log(response)
-            //TODO 这里存放一个全局变量，将TOKEN存入
-          }
-        });
-      },
+      });
     },
-    components: {},
-  };
+  },
+  components: {},
+};
 </script>
 <style lang="less">
   @import url(../../../static/style/site.vars.less);
@@ -195,6 +194,5 @@
         color: rgb(255, 103, 103);
       }
     }
-
   }
 </style>
