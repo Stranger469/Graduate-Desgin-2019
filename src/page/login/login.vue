@@ -6,7 +6,7 @@
         <label class="form-item-left">手机号:</label>
         <div class="form-item-right">
           <input type="tel" v-model="tel" placeholder="请输入手机号">
-          <div class="wrong" v-show="display1">{{ telWrong }}</div>
+          <div class="wrong">{{ telWrong }}</div>
         </div>
       </div>
       <div class="form-item">
@@ -14,7 +14,7 @@
         <div class="form-item-right gvc-container">
           <input class="gvc" type="text" v-model="graphicVerifyCode" placeholder="验证码">
           <img v-bind:src="imgpath" width="80" height="30">
-          <div class="wrong" v-show="display2">{{ gvcWrong }}</div>
+          <div class="wrong">{{ gvcWrong }}</div>
         </div>
       </div>
       <div class="form-item">
@@ -26,7 +26,7 @@
             class="send" :class="{disable: countdown}"
             @click="sendMsgFn">{{ sendMsg }}
           </div>
-          <div class="wrong" v-show="display3">{{ snsWrong }}</div>
+          <div class="wrong">{{ snsWrong }}</div>
         </div>
       </div>
       <div class="form-item">
@@ -52,12 +52,9 @@ export default {
       sendMsg: '发送验证码',
       countdown: false,
       // 手机号/图形验证码/短信验证码出错
-      telWrong: '手机号不合法',
-      gvcWrong: '验证码输入错误',
-      snsWrong: '验证码输入错误',
-      display1: false,
-      display2: false,
-      display3: false,
+      telWrong: '',
+      gvcWrong: '',
+      snsWrong: '',
     };
   },
   mounted() {
@@ -72,12 +69,17 @@ export default {
   },
   methods: {
     sendMsgFn() {
-      // 简单逻辑：如果手机号长度小于11位，则显示手机号错误
-      if (this.$data.tel.length < 11) {
-        this.$data.display1 = true;
+      // 简单逻辑：如果手机号长度不等于11位，则显示手机号错误
+      if (this.tel.length !== 11) {
+        this.telWrong = '手机号不正确';
         return;
       }
-      this.$data.display1 = false;
+      if (this.graphicVerifyCode === '') {
+        this.gvcWrong = '请输入验证码';
+        return;
+      }
+      this.gvcWrong = '';
+      this.telWrong = '';
 
       const that = this;
       if (this.countdown) {
@@ -90,7 +92,7 @@ export default {
       }).then((response) => {
         // 如果正确则发送短信验证码
         if (response.data.data === true) {
-          that.$data.display2 = false;
+          that.gvcWrong = '';
           api.getPhoneValidate({
             phone: that.$data.tel,
             type: 1,
@@ -110,9 +112,9 @@ export default {
               }
             }, 1000);
           });
-          // 如果错误则显示图形验证码错误
+        // 如果错误则显示图形验证码错误
         } else {
-          that.$data.display2 = true;
+          that.gvcWrong = '验证码不正确';
         }
       });
     },
@@ -126,9 +128,10 @@ export default {
       }).then((response) => {
         // console.log(response);
         if (response.data.code === 400) {
-          that.$data.display3 = true;
+          that.snsWrong = '短信验证码不正确';
         } else {
           this.$alert('登陆成功');
+          this.snsWrong = '';
           // console.log(response);
           // TODO 这里存放一个全局变量，将TOKEN存入
         }
