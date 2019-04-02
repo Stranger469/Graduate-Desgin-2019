@@ -1,5 +1,15 @@
 <template>
   <div class="emplMgn">
+    <header>
+      <div style="flex:1">
+        <div class="btn primary">添加</div>
+      </div>
+      <div>
+        <input type="text" placeholder="姓名">
+        <input type="text" placeholder="部门名">
+        <div class="btn primary">搜索</div>
+      </div>
+    </header>
     <div class="card-container">
       <div class="card-row" v-for="(empl, index) of empls" :key="index">
         <div class="card">
@@ -94,7 +104,22 @@ export default {
 @import url(../../../../static/style/site.comm.less);
 @import url(../../../../static/style/site.vars.less);
 .emplMgn {
-  padding-top: 40px;
+  padding-top: 20px;
+  & > header {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    margin-bottom: 20px;
+    & > div:nth-child(2) {
+      display: flex;
+      justify-content: right;
+      box-sizing: border-box;
+      & > input {
+        height: 20px;
+        margin-right: 10px;
+      }
+    }
+  }
   .card-container {
     height: 470px;
     .card-row {

@@ -30,6 +30,7 @@ export default {
 .node {
   margin-top: 15px;
   .text {
+    padding: 10px;
     margin-right: 20px;
   }
   .add, .modify, .delete {
