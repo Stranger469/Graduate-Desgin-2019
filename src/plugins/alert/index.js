@@ -1,3 +1,4 @@
+/* eslint-disable */
 import valert from './install';
 
 export default{

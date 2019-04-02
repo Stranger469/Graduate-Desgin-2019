@@ -1,3 +1,4 @@
+/* eslint-disable */
 import vue from 'vue';
 import vconfirm from './index.vue';
 

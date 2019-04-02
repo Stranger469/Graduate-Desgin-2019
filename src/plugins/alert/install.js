@@ -1,3 +1,4 @@
+/* eslint-disable */
 import vue from 'vue';
 import valert from './index.vue';
 
@@ -8,7 +9,6 @@ function init(op) {
   }, op);
   return new constructor(option);
 }
-// eslint-disable-next-line no-unused-vars
 function initOption(param) {
   param;
 }

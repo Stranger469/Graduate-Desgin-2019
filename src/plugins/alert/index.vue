@@ -28,7 +28,7 @@ export default {
     },
   },
   methods: {
-    end(e) {
+    end() {
       if (!this.timer) {
         this.hide();
         this.timer = setTimeout(() => {
