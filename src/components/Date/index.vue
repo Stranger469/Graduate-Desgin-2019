@@ -1,11 +1,27 @@
 <template>
   <div class="date">
     <div v-if="singleInput" class="input_group" @click="togglePicker">
-      <input placeholder="选择日期范围" type="text" :value="formatDate('single')" disabled>
+      <input
+        placeholder="选择日期范围"
+        type="text"
+        :class="{ disabled: disabled }"
+        :value="formatDate('single')"
+        :style="'width: ' + width"
+        disabled>
     </div>
     <div v-else class="input_group" @click="togglePicker">
-      <input type="text" :value="formatDate('start')" disabled>
-      <input type="text" :value="formatDate('end')" disabled>
+      <input
+        type="text"
+        :style="'width:' + width"
+        :value="formatDate('start')"
+        :class="{ disabled: disabled }"
+        disabled>
+      <input
+        type="text"
+        :style="'width:' + width"
+        :value="formatDate('end')"
+        :class="{ disabled: disabled }"
+        disabled>
     </div>
     <transition name="fade">
       <div v-show="show" class="date_picker" :class="{ absolute: !alwaysShow }">
@@ -91,6 +107,9 @@ export default {
     value: {
       type: [Array, Date],
     },
+    width: {
+      type: String,
+    },
     alwaysShow: {
       type: Boolean,
       default: false,
@@ -102,6 +121,9 @@ export default {
     // 限制最大可选择日期区间
     max: {
       type: Number,
+    },
+    disabled: {
+      type: Boolean,
     },
   },
   data() {
@@ -203,7 +225,7 @@ export default {
     isChecked(dateItem) {
       if (dateItem.date === '') return false;
       if (this.singleInput) {
-        console.log(this.value === null);
+        // console.log(this.value === null);
         if (this.value === null || this.value === '') return false;
         return dateItem.date.getTime() === this.value.getTime();
       }
@@ -338,6 +360,7 @@ export default {
     },
 
     togglePicker() {
+      if (this.disabled) return;
       if (!this.alwaysShow) {
         this.show = !this.show;
       }
@@ -375,14 +398,17 @@ export default {
   .input_group {
     font-size: 0;
     input {
-      font-size: 12px;
+      font-size: 10px;
       padding: 10px;
-      width: 195px;
       height: 30px;
       box-sizing: border-box;
       cursor: pointer;
       &[disabled] {
         background: #fff;
+      }
+      &.disabled {
+        background: #EBEBE4;
+        cursor: default;
       }
     }
   }

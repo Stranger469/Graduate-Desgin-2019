@@ -279,9 +279,10 @@ export default {
     }
     .chosen {
       flex: 1;
-      font-size: 12px;
+      font-size: 13px;
       color: #000;
       text-align: left;
+      padding-left: 2px;
       ul {
         width: 100%;
         list-style: none;

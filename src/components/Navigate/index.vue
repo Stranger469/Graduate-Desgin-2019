@@ -35,7 +35,7 @@ export default {
   margin-bottom: 10px;
   width: 100%;
   height: 40px;
-  background: rgba(87, 166, 255, 0.45);
+  background: #fff;
   display: flex;
   justify-content: left;
   align-items: center;
@@ -48,10 +48,10 @@ export default {
     align-items: center;
     padding: 0 20px 0 20px;
     &:hover {
-      background-color: #fff;
+      background-color: rgba(87, 166, 255, 0.45);
     }
     &.chosen {
-      background: #fff;
+      background: rgba(87, 166, 255, 0.45);
     }
   }
 }
