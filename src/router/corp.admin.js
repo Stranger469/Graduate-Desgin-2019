@@ -7,6 +7,7 @@ export default {
   path: '/corp',
   name: 'Corp',
   component: CorpIndex,
+  redirect: 'corp/corpInfo',
   children: [
     {
       path: 'corpInfo',

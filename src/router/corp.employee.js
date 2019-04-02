@@ -7,6 +7,7 @@ export default {
   path: '/empl/',
   name: 'Empl',
   component: EmplIndex,
+  redirect: 'InterAssign',
   children: [
     {
       path: 'interAssign',

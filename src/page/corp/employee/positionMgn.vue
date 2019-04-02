@@ -4,8 +4,10 @@
   </div>
 </template>
 <script>
+import { emplMixin } from '@/mixins/NavigationGuards';
 
 export default {
+  mixins: [emplMixin],
   name: 'PositionMgn',
   data() {
     return {

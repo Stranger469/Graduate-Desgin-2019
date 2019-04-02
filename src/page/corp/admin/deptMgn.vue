@@ -4,10 +4,10 @@
   </div>
 </template>
 <script>
-import ng from '@/mixins/NavigationGuards';
+import { corpMixin } from '@/mixins/NavigationGuards';
 
 export default {
-  mixins: [ng],
+  mixins: [corpMixin],
   name: 'DeptMgn',
   data() {
     return {
