@@ -1,11 +1,13 @@
 export const corpMixin = {
   beforeRouteEnter(to, from, next) {
     // TODO 判断企业管理员
-    console.log(sessionStorage.getItem('userToken'), sessionStorage.getItem('loginType'));
+    // console.log(sessionStorage.getItem('userToken'), sessionStorage.getItem('loginType'));
     if (sessionStorage.getItem('userToken') === null || sessionStorage.getItem('loginType') !== '2') {
       next(false);
     } else {
-      next();
+      next((vm) => {
+        vm.$emit('route-switch', window.location.href.split('/').pop());
+      });
     }
   },
 };
@@ -16,7 +18,9 @@ export const emplMixin = {
     if (sessionStorage.getItem('userToken') === null || sessionStorage.getItem('loginType') !== 3) {
       next(false);
     } else {
-      next();
+      next((vm) => {
+        vm.$emit('route-switch', window.location.href.split('/').pop());
+      });
     }
   },
 };
