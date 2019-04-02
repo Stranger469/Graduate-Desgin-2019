@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100%">
+  <div class="initPage">
     <MainHeader/>
     <router-view></router-view>
   </div>
@@ -22,5 +22,7 @@ export default {
 <style lang="less">
 @import url(../../static/style/site.comm.less);
 @import url(../../static/style/site.vars.less);
-
+.initPage {
+  height: calc(100% - 50px);
+}
 </style>

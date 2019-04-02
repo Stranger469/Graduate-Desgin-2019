@@ -5,7 +5,7 @@
       <div class="form-item">
         <label class="form-item-left">手机号:</label>
         <div class="form-item-right">
-          <input type="tel" v-model="tel" placeholder="请输入手机号">
+          <input ref="initFocus" type="tel" v-model="tel" placeholder="请输入手机号">
           <div class="wrong">{{ telWrong }}</div>
         </div>
       </div>
@@ -58,6 +58,7 @@ export default {
     };
   },
   mounted() {
+    this.$refs.initFocus.focus();
     const that = this;
     api.getImgValidate({}).then((response) => {
       // console.log(response);
