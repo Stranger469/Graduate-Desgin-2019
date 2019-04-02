@@ -4,13 +4,20 @@
   </div>
 </template>
 <script>
+import ng from '@/mixins/NavigationGuards';
 
 export default {
+  mixins: [ng],
   name: 'InterAssign',
   data() {
     return {
 
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    if (sessionStorage.getItem('userToken') === null) {
+      next(false);
+    }
   },
 };
 </script>

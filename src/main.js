@@ -9,6 +9,7 @@ import vconfirm from './plugins/confirm';
 Vue.config.productionTip = false;
 Vue.use(valert);
 Vue.use(vconfirm);
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

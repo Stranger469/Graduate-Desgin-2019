@@ -3,7 +3,7 @@
     <transition name="valert-ani" >
       <div class="valert-wrap" v-if="open">
         <div class="valert" >
-          <p>{{msg}}</p>
+          <p>{{ msg }}</p>
         </div>
       </div>
     </transition>

@@ -134,7 +134,7 @@ export default {
           this.$alert('登陆成功');
           this.snsWrong = '';
           // console.log(response);
-          // TODO 这里存放一个全局变量，将TOKEN存入
+          // TODO 这里存放一个全局变量，将TOKEN存入（userToken）
         }
       });
     },

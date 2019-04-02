@@ -4,8 +4,10 @@
   </div>
 </template>
 <script>
+import ng from '@/mixins/NavigationGuards';
 
 export default {
+  mixins: [ng],
   name: 'DeptMgn',
   data() {
     return {
