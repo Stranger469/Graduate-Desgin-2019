@@ -96,11 +96,9 @@
             <div class="btn primary">上传</div>
           </label>
           <div class="corpImg-container">
-            <div class="corpImgs"><span style="flex:1">[name]</span><span>x</span></div>
-            <div class="corpImgs"><span style="flex:1">[name]</span><span>x</span></div>
-            <div class="corpImgs"><span style="flex:1">[name]</span><span>x</span></div>
-            <div class="corpImgs"><span style="flex:1">[name]</span><span>x</span></div>
-            <div class="corpImgs"><span style="flex:1">[name]</span><span>x</span></div>
+            <div class="corpImgs" v-for="(img, index) of corpImgs" :key="img.id">
+              <span style="flex:1">{{ img.name }}</span><span @click="deleteImg(index)">x</span>
+            </div>
           </div>
         </div>
       </div>
@@ -127,6 +125,14 @@ export default {
       scale: '',
       finacial: '',
       date: null,
+      // 公司图片
+      corpImgs: [
+        { name: '图片名称1', id: '111' },
+        { name: '图片名称2', id: '222' },
+        { name: '图片名称3', id: '333' },
+        { name: '图片名称4', id: '444' },
+        { name: '图片名称5', id: '555' },
+      ],
     };
   },
   components: {
@@ -139,12 +145,22 @@ export default {
       if (this.$refs.logo.files[0] !== undefined) {
         this.$confirm('确定要更换公司图标吗？', (res) => {
           if (res === true) {
+            // TODO 更换图片后台逻辑
             this.$alert('更改成功');
           } else {
             this.$refs.logo.value = null;
           }
         });
       }
+    },
+    deleteImg(index) {
+      this.$confirm('确定要删除图片吗？', (res) => {
+        if (res === true) {
+          // TODO 删除图片后台逻辑
+          this.corpImgs.splice(index, 1);
+          this.$alert('删除成功');
+        }
+      });
     },
   },
 };
@@ -161,7 +177,7 @@ export default {
     display: inline-block;
     text-align: left;
     box-sizing: border-box;
-    width: 49%;
+    width: 50%;
     .form-item-left {
       width: 80px;
       text-align: right;
