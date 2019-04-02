@@ -1,44 +1,46 @@
 <template>
   <div class="emplMgn">
-    <div class="card-container" v-for="(empl, index) of empls" :key="index">
-      <div class="card">
-        <div class="row">
-          <div class="name">{{ empl[0].name }}<span class="close">x</span></div>
+    <div class="card-container">
+      <div class="card-row" v-for="(empl, index) of empls" :key="index">
+        <div class="card">
+          <div class="row">
+            <div class="name">{{ empl[0].name }}<span class="close">x</span></div>
+          </div>
+          <div class="row">
+            <span>电话:</span> {{ empl[0].tel }}
+            <span><font size="1">部门: </font>{{ empl[0].dept }}</span>
+          </div>
+          <div class="row">
+            <span>邮箱:</span> {{ empl[0].email }}
+            <span><div class="btn primary">修改</div></span>
+          </div>
         </div>
-        <div class="row">
-          <span>电话:</span> {{ empl[0].tel }}
-          <span><font size="1">部门: </font>{{ empl[0].dept }}</span>
+        <div class="card" style="margin: 0 10px 0 10px">
+          <div class="row">
+            <div class="name">{{ empl[1].name }}<span class="close">x</span></div>
+          </div>
+          <div class="row">
+            <span>电话:</span> {{ empl[1].tel }}
+            <span><font size="1">部门: </font>{{ empl[1].dept }}</span>
+          </div>
+          <div class="row">
+            <span>邮箱:</span> {{ empl[1].email }}
+            <span><div class="btn primary">修改</div></span>
+          </div>
         </div>
-        <div class="row">
-          <span>邮箱:</span> {{ empl[0].email }}
-          <span><div class="btn primary">修改</div></span>
-        </div>
-      </div>
-      <div class="card" style="margin: 0 10px 0 10px">
-        <div class="row">
-          <div class="name">{{ empl[1].name }}<span class="close">x</span></div>
-        </div>
-        <div class="row">
-          <span>电话:</span> {{ empl[1].tel }}
-          <span><font size="1">部门: </font>{{ empl[1].dept }}</span>
-        </div>
-        <div class="row">
-          <span>邮箱:</span> {{ empl[1].email }}
-          <span><div class="btn primary">修改</div></span>
-        </div>
-      </div>
-      <div class="card">
-        <div class="row">
-          <div class="name">{{ empl[2].name }}<span class="close">x</span>
-        </div>
-        </div>
-        <div class="row">
-          <span>电话:</span> {{ empl[2].tel }}
-          <span><font size="1">部门: </font>{{ empl[2].dept }}</span>
-        </div>
-        <div class="row">
-          <span>邮箱:</span> {{ empl[2].email }}
-          <span><div class="btn primary">修改</div></span>
+        <div class="card">
+          <div class="row">
+            <div class="name">{{ empl[2].name }}<span class="close">x</span>
+          </div>
+          </div>
+          <div class="row">
+            <span>电话:</span> {{ empl[2].tel }}
+            <span><font size="1">部门: </font>{{ empl[2].dept }}</span>
+          </div>
+          <div class="row">
+            <span>邮箱:</span> {{ empl[2].email }}
+            <span><div class="btn primary">修改</div></span>
+          </div>
         </div>
       </div>
     </div>
@@ -94,40 +96,43 @@ export default {
 .emplMgn {
   padding-top: 40px;
   .card-container {
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    margin-bottom: 10px;
-    .card {
-      position: relative;
-      background: rgba(103, 174, 255, 0.3);
-      width: 100%;
-      height: 150px;
-      box-sizing: border-box;
-      padding: 15px;
-      .row {
-        user-select: none;
-        color: @site-main;
+    height: 470px;
+    .card-row {
+      display: flex;
+      justify-content: left;
+      align-items: center;
+      margin-bottom: 10px;
+      .card {
+        position: relative;
+        background: rgba(103, 174, 255, 0.3);
+        width: 100%;
+        height: 150px;
         box-sizing: border-box;
-        padding: 0px;
-        height: 45px;
-        .close {
-          cursor: pointer;
-          float: right;
-          font-size: 12px;
-        }
-        .name {
-          color: rgb(0, 64, 138);
-          font-size: 24px;
-        }
-        .tel {
-          color: #fff;
-        }
-        & > span:nth-child(1) {
-          font-size: 10px;
-        }
-        & > span:nth-child(2) {
-          float: right;
+        padding: 15px;
+        .row {
+          user-select: none;
+          color: @site-main;
+          box-sizing: border-box;
+          padding: 0px;
+          height: 45px;
+          .close {
+            cursor: pointer;
+            float: right;
+            font-size: 12px;
+          }
+          .name {
+            color: rgb(0, 64, 138);
+            font-size: 24px;
+          }
+          .tel {
+            color: #fff;
+          }
+          & > span:nth-child(1) {
+            font-size: 10px;
+          }
+          & > span:nth-child(2) {
+            float: right;
+          }
         }
       }
     }
