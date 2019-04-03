@@ -1,15 +1,36 @@
 <template>
   <div class="deptMgn">
     <div class="tree-container" ref="tree_container">
-      <Node v-for="obj of html" :key="obj.id" :item="obj">
-        {{ obj.name }}
+      <Node
+        @add="addDeptClicked"
+        @modify="modifyDeptClicked"
+        @delete="deleteDeptClicked"
+        v-for="obj of html"
+        :key="obj.id"
+        :item="obj">
+          {{ obj.name }}
       </Node>
     </div>
+    <dept-dialog
+      @close="addDialogShow = false"
+      @done="addDialog"
+      :dialogData="{}"
+      title="添加部门"
+      :show="addDialogShow"
+    ></dept-dialog>
+    <dept-dialog
+      @close="modifyDialogShow = false"
+      @done="modifyDialog"
+      :dialogData="modifyDialogData"
+      title="修改部门信息"
+      :show="modifyDialogShow"
+    ></dept-dialog>
   </div>
 </template>
 <script>
 import { corpMixin } from '@/mixins/NavigationGuards';
 import Node from '@/components/treeNode/TreeNode';
+import DeptDialog from '@/components/Dialogs/addDept';
 
 export default {
   mixins: [corpMixin],
@@ -67,6 +88,17 @@ export default {
           },
         ],
       },
+      addDialogShow: false,
+      modifyDialogShow: false,
+      modifyDialogData: {
+        name: null,
+        id: null,
+      },
+
+      newDept: {
+        parentId: null,
+        name: null,
+      },
     };
   },
   methods: {
@@ -85,12 +117,40 @@ export default {
         this.layer = this.layer.substr(0, this.layer.length - 2);
       }
     },
+    addDeptClicked(parent) {
+      this.newDept.parentId = parent.id;
+      this.addDialogShow = true;
+    },
+    modifyDeptClicked(node) {
+      // eslint-disable-next-line no-irregular-whitespace
+      this.modifyDialogData.name = node.name.replace(/　/g, '');
+      this.modifyDialogData.id = node.id;
+      this.modifyDialogShow = true;
+    },
+    deleteDeptClicked(node) {
+      this.$confirm('确定要删除部门吗？', (res) => {
+        if (res) {
+          // TODO 删除部门逻辑，node里面有name和id
+        }
+      });
+    },
+    addDialog(obj) {
+      this.newDept.name = obj.name;
+      this.addDialogShow = false;
+      // TODO 添加新部门接口逻辑，刷新树
+    },
+    modifyDialog(obj) {
+      this.modifyDialogShow = false;
+      // obj有name和id两个属性
+      // TODO 修改部门逻辑
+    },
   },
   mounted() {
     this.renderTree(this.tree, 0, 0);
   },
   components: {
     Node,
+    DeptDialog,
   },
 };
 </script>
@@ -98,4 +158,9 @@ export default {
 @import url(../../../../static/style/site.comm.less);
 @import url(../../../../static/style/site.vars.less);
 
+.deptMgn {
+  .tree-container {
+    margin-top: 50px;
+  }
+}
 </style>

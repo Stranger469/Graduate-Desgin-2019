@@ -3,7 +3,9 @@
     <span class="text">
       <slot></slot>
     </span>
-    <span class="add"> + </span><span class="modify"> √ </span><span class="delete"> x </span>
+    <span class="add" @click="$emit('add', item)"> + </span>
+    <span class="modify" @click="$emit('modify', item)"> √ </span>
+    <span class="delete" @click="$emit('delete', item)"> x </span>
   </div>
 </template>
 <script>
@@ -12,14 +14,6 @@ export default {
   name: 'Node',
   props: {
     item: Object,
-  },
-  data() {
-    return {
-
-    };
-  },
-  methods: {
-
   },
 };
 </script>
