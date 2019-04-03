@@ -13,8 +13,8 @@ export default {
     return {
       routes: [
         {
-          name: '职位管理',
-          link: '#/empl/positionMgn',
+          name: '面试分配',
+          link: '#/empl/interAssign',
           chosen: true,
         },
         {
@@ -23,8 +23,8 @@ export default {
           chosen: false,
         },
         {
-          name: '面试分配',
-          link: '#/empl/interAssign',
+          name: '职位管理',
+          link: '#/empl/positionMgn',
           chosen: false,
         },
       ],
