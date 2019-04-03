@@ -23,7 +23,7 @@
        </div>
        <div class="jump">
           <span @click="toPage(inValue)">跳至</span>
-          <input class="page-item" v-model='inValue'>
+          <input class="page-item" @keyup.enter="toPage(inValue)" v-model='inValue'>
           页
        </div>
     </div>
@@ -129,9 +129,8 @@ export default{
       } else if (page > this.totalPage) {
         page = this.totalPage;
       }
-      this.$emit('setCurPage', page);
+      this.$emit('setCurPage', parseInt(page));
       this.inValue = '';
-      //        this.curPage = page;
     },
   },
 };

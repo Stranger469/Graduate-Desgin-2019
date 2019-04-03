@@ -24,5 +24,10 @@ export default {
 @import url(../../static/style/site.vars.less);
 .initPage {
   height: 100%;
+  overflow-y: scroll;
+  box-sizing: border-box;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 </style>

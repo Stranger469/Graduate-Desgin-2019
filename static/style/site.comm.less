@@ -259,11 +259,23 @@ form {
       td {
         text-align: center;
         border: 0.5px solid #E4E4E4;
+        border-left: 0;
+        border-right: 0;
         font-size: 12px;
         background: #fff;
+        &.expend {
+          cursor: pointer;
+          width: 40px;
+          &>img {
+            display: inline-block;
+            user-select: none;
+            transform: rotate(-90deg);
+          }
+        }
         &>a {
           color: @site-main;
           cursor: pointer;
+          user-select: none;
         }
       }
     }
