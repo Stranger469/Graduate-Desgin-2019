@@ -265,7 +265,7 @@ export default {
       });
     },
     submit() {
-      console.log(this.loginType);
+      // console.log(this.loginType);
       switch (this.loginType) {
         case 1:
           this.type1Login();

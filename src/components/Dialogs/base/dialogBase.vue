@@ -66,9 +66,9 @@ export default{
         cursor: pointer;
         width: 15px;
         height: 15px;
-        background: url(../../../../static/img/u532.png) center center;
+        background: url(../../../assets/img/u532.png) center center;
         &:hover {
-           background: url(../../../../static/img/u532_mouseOver.png) center center;
+           background: url(../../../assets/img/u532_mouseOver.png) center center;
          }
       }
     }

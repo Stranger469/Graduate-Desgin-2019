@@ -1,21 +1,14 @@
 <template>
   <dialogBase v-if="show" :title="title" @ok="submit" @close="close">
-      <div class="form addRules">
+      <form class="addDept">
           <div class="form-item">
-            <label class="require" for="rule-name">部门名称:</label>
-            <input id="rule-name" v-model="outData.name" type="text" placeholder="长度必须小于7个字节">
+            <label class="require" for="dept-name">部门名称:</label>
+            <input id="dept-name" v-model="outData.name" type="text" placeholder="长度必须小于10">
             <div class="error_text">
               {{ hasError__name }}
             </div>
           </div>
-          <div class="form-item">
-            <label class="require" for="rule-desc">职能描述:</label>
-            <textarea placeholder="长度必须小于50个字符" rows="3" v-model="outData.desc" id="rule-desc" ></textarea>
-            <div class="error_text" style="top:59px">
-              {{ hasError__desc }}
-            </div>
-          </div>
-      </div>
+      </form>
   </dialogBase>
 </template>
 
@@ -28,7 +21,6 @@ export default{
     const defaultObj = {
       outData: {},
       hasError__name: '',
-      hasError__desc: '',
     };
     this.resetData(defaultObj.outData);
     return defaultObj;
@@ -43,33 +35,27 @@ export default{
   },
   methods: {
     getStrLen(str) {
-      return str.replace(/[\u0391-\uFFE5]/g, 'xx').length;
+      // return str.replace(/[\u0391-\uFFE5]/g, 'xx').length;
+      return str.length;
     },
     resetData(obj) {
       this.outData = obj || this.outData;
       this.outData.name = this.dialogData.name;
-      this.outData.desc = this.dialogData.desc;
-      this.outData.dept_id = this.dialogData.dept_id;
+      this.outData.id = this.dialogData.id;
     },
     close() {
       this.$emit('close', false);
     },
     submit() {
       let flag = true;
-      if (!this.outData.name || this.getStrLen(this.outData.name) > 7) {
+      if (!this.outData.name || this.getStrLen(this.outData.name) > 10) {
         this.hasError__name = '部门名称格式错误';
         flag = false;
       } else {
         this.hasError__name = '';
       }
-      if (!this.outData.desc || this.getStrLen(this.outData.name) > 50) {
-        this.hasError__desc = '职能描述格式错误';
-        flag = false;
-      } else {
-        this.hasError__desc = '';
-      }
       if (!flag) return;
-      this.$emit('saveData', { outData: this.outData });
+      this.$emit('done', this.outData);
     },
   },
   components: {
@@ -78,7 +64,7 @@ export default{
 };
 </script>
 <style lang="less">
-  .addRules{
+  .addDept{
     .form-item {
       position: relative;
       margin: 20px 10px;

@@ -93,7 +93,6 @@ export default {
           height: 25px;
           width: 50px;
           border: 1px solid @site-main;
-          border-radius: 20px;
         }
       }
 
