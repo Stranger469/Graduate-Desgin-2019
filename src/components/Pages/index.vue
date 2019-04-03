@@ -4,7 +4,7 @@
          共<span>{{totalPage}}</span>页/<span>{{total}}</span>条数据
        </div>
        <div class="content">
-         <span class="page-item" @click="toPage(curPage-1)"> << </span>
+         <span class="page-item" @click="toPage(curPage-1)"> {{ forward }} </span>
          <template  v-if="startPage>=showSizeMax">
             <span class="page-item" @click="toPage(1)">1</span>
             <span class="page-item">...</span>
@@ -19,7 +19,7 @@
            <span class="page-item">...</span>
            <span class="page-item" @click="toPage(totalPage)">{{totalPage}}</span>
          </template>
-         <span class="page-item"@click="toPage(curPage+1)"> >> </span>
+         <span class="page-item" @click="toPage(curPage+1)"> >> </span>
        </div>
        <div class="jump">
           <span @click="toPage(inValue)">跳至</span>
@@ -87,6 +87,7 @@
 
 </style>
 <script>
+/* eslint-disable */
 export default{
   name: 'page',
   props: [
@@ -99,24 +100,25 @@ export default{
       // pageSize:10,
       showSizeMax: 6,
       inValue: '',
+      forward: '<<',
     };
   },
   computed: {
     totalPage() {
       const totalPage = this.total / this.pageSize;
-      return totalPage == 0 ? 0 : Math.ceil(totalPage);
+      return totalPage === 0 ? 0 : Math.ceil(totalPage);
     },
     startPage() {
       const rightSize = this.showSizeMax - 1;
       const num = Math.floor(this.curPage / rightSize);
-      const group = this.curPage % rightSize == 0 ? num - 1 : num;
-      const start = group * rightSize + 1;
+      const group = this.curPage % rightSize === 0 ? num - 1 : num;
+      const start = (group * rightSize) + 1;
       // console.log(group);
-      return start == 0 ? 1 : start;
+      return start === 0 ? 1 : start;
       // 1 8 15 22 29
     },
     showSize() {
-      const max = this.startPage - 1 + this.showSizeMax;
+      const max = (this.startPage - 1) + this.showSizeMax;
       const min = max - this.totalPage;
       return min > 0 ? this.showSizeMax - min : this.showSizeMax;
     },
