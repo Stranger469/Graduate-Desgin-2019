@@ -15,7 +15,7 @@ export const corpMixin = {
 export const emplMixin = {
   beforeRouteEnter(to, from, next) {
     // TODO 判断猎头
-    if (sessionStorage.getItem('userToken') === null || sessionStorage.getItem('loginType') !== 3) {
+    if (sessionStorage.getItem('userToken') === null || sessionStorage.getItem('loginType') !== '3') {
       next(false);
     } else {
       next((vm) => {

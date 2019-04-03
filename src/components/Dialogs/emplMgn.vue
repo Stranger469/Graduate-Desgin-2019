@@ -39,9 +39,7 @@
           <Option
             v-for="item of [{key: '0', value: '傻屌分部1'},
             {key: '1', value: '傻屌分部2'},
-            {key: '2', value: '傻屌分部3'},
-            {key: '3', value: '傻屌分部4'},
-            {key: '4', value: '傻屌分部5'}]"
+            {key: '2', value: '傻屌分部3'},]"
             :key="item.key"
             :value="item.key">
               {{ item.value }}

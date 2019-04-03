@@ -206,3 +206,50 @@ form {
     }
   }
 }
+// table
+.table-header {
+  width: 100%;
+  height: 50px;
+  margin: 0 auto;
+  background: #f3f3f3;
+  padding: 0 20px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.table {
+  border-spacing: 0;
+  width: 100%;
+  margin: 0 auto;
+  border: 0.5px solid #E4E4E4;
+  border-collapse: collapse;
+  thead {
+    color: rgb(99, 99, 99);
+    font-size: 14px;
+    th {
+      border: 0.5px solid #E4E4E4;
+      box-sizing: border-box;
+      text-align: center;
+      height: 50px;
+      background: #F9FAFC;
+    }
+  }
+  tbody {
+    tr{
+      height: 45px;
+      td {
+        text-align: center;
+        border: 0.5px solid #E4E4E4;
+        font-size: 12px;
+        a {
+          color: #42C8AD;
+          text-decoration: none;
+          &.primary {
+            color: #12D012;
+          }
+        }
+      }
+    }
+  }
+}

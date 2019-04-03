@@ -1,7 +1,7 @@
 <template>
   <div class="emplIndex">
-    <Navi></Navi>
-    <router-view></router-view>
+    <Navi :routes="routes"></Navi>
+    <router-view @route-switch="switchChosen"></router-view>
   </div>
 </template>
 <script>
@@ -11,8 +11,35 @@ export default {
   name: 'EmplIndex',
   data() {
     return {
-
+      routes: [
+        {
+          name: '职位管理',
+          link: '#/empl/positionMgn',
+          chosen: true,
+        },
+        {
+          name: '面试管理',
+          link: '#/empl/interMgn',
+          chosen: false,
+        },
+        {
+          name: '面试分配',
+          link: '#/empl/interAssign',
+          chosen: false,
+        },
+      ],
     };
+  },
+  methods: {
+    switchChosen(name) {
+      this.routes.forEach((e) => {
+        if (e.link.split('/').pop() !== name) {
+          e.chosen = false;
+        } else {
+          e.chosen = true;
+        }
+      });
+    },
   },
   components: {
     Navi,

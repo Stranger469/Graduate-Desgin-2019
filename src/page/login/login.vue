@@ -82,7 +82,7 @@ export default {
     };
   },
   mounted() {
-    sessionStorage.setItem('loginType', 2);
+    sessionStorage.setItem('loginType', 3);
     sessionStorage.setItem('userToken', 'abc');
     this.$refs.initFocus.focus();
     const that = this;
