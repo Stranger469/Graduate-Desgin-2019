@@ -25,7 +25,7 @@
             <span><div class="btn primary">修改</div></span>
           </div>
         </div>
-        <div class="card" style="margin: 0 10px 0 10px">
+        <div class="card" style="margin: 0 10px 0 10px" v-if="empl[1]">
           <div class="row">
             <div class="name">{{ empl[1].name }}<span class="close">x</span></div>
           </div>
@@ -38,7 +38,8 @@
             <span><div class="btn primary">修改</div></span>
           </div>
         </div>
-        <div class="card">
+        <div class="card" style="opacity:0" v-else></div>
+        <div class="card" v-if="empl[2]">
           <div class="row">
             <div class="name">{{ empl[2].name }}<span class="close">x</span>
           </div>
@@ -52,6 +53,7 @@
             <span><div class="btn primary">修改</div></span>
           </div>
         </div>
+        <div class="card" style="opacity:0" v-else></div>
       </div>
     </div>
     <footer>
@@ -63,6 +65,7 @@
 import { corpMixin } from '@/mixins/NavigationGuards';
 import Page from '@/components/Pages/index';
 import api from '@/api/emplMgn';
+
 export default {
   mixins: [corpMixin],
   name: 'EmplMgn',
@@ -83,8 +86,6 @@ export default {
         // ],
         // [
         //   { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
-        //   { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
-        //   { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
         // ],
       ],
       curPage: 1,
@@ -96,40 +97,40 @@ export default {
     Page,
   },
   mounted() {
-    this.companyId = sessionStorage.getItem("companyId");
+    this.companyId = sessionStorage.getItem('companyId');
     this.getAllEmpl();
   },
   methods: {
     getAllEmpl() {
       const that = this;
-      let params = new URLSearchParams();
-      params.append("companyId",sessionStorage.getItem("companyId"));
-      params.append("rows",that.$data.pageSize);
-      params.append("page",that.$data.curPage);
-      params.append("deptName",that.$data.likeDeptName);
-      params.append("name",that.$data.likeName);
-      that.$data.empls.splice(0,that.$data.empls.length);
+      const params = new URLSearchParams();
+      params.append('companyId', sessionStorage.getItem('companyId'));
+      params.append('rows', that.$data.pageSize);
+      params.append('page', that.$data.curPage);
+      params.append('deptName', that.$data.likeDeptName);
+      params.append('name', that.$data.likeName);
+      that.$data.empls.splice(0, that.$data.empls.length);
       api.getAllEmploApi(params).then((response) => {
-        let newarray = [];
-        for(let i = 0 ; i < response.data.rows.length ; i++) {
+        const newarray = [];
+        for (let i = 0; i < response.data.rows.length; i++) {
           console.log(response.data.rows[i]);
           newarray.push({
             name: response.data.rows[i].sysUser.realname,
             tel: response.data.rows[i].sysUser.phone,
             dept: response.data.rows[i].bdept.name,
-            email: response.data.rows[i].bdept.email
+            email: response.data.rows[i].bdept.email,
           });
-          if(newarray.length === 3) {
+          if (newarray.length === 3) {
             that.$data.empls.push(newarray);
-            newarray.splice(0,newarray.length);
+            newarray.splice(0, newarray.length);
           }
         }
-        if(newarray.length !== 0) {
-          that.$data.empls.push(newarray)
+        if (newarray.length !== 0) {
+          that.$data.empls.push(newarray);
         }
         that.$data.total = response.data.total;
         that.$data.curPage = response.data.pageNu;
-        console.log(that.$data.empls)
+        console.log(that.$data.empls);
       });
     },
     setCurPage(page) {

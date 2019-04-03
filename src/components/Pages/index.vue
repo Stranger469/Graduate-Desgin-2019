@@ -42,7 +42,6 @@
       text-align: center;
       border: 1px solid rgba(215, 215, 215, 1);
       font-size: 13px;
-      border-radius: 3px;
       cursor: pointer;
       display: inline-block;
       vertical-align: middle;
