@@ -120,7 +120,7 @@
         </div>
       </div>
     </form>
-    <div class="btn primary" @click="getCompanyInfo">重置</div>
+    <div class="btn primary" @click="getCompanyInfo" style="margin-right:5px">重置</div>
     <div class="btn primary" @click="update">修改</div>
   </div>
 </template>
@@ -130,7 +130,8 @@ import Select from '@/components/select/Select';
 import Option from '@/components/select/Option';
 import DatePicker from '@/components/Date/index';
 import api from '@/api/corpInfo';
-import nginx from '@/assets/nginxconfig'
+import nginx from '@/assets/nginxconfig';
+
 export default {
   mixins: [corpMixin],
   name: 'CorpInfo',
@@ -139,7 +140,7 @@ export default {
       companyName: '',
       legalPerson: '',
       capital: '',
-      url:'',
+      url: '',
       address: '',
       description: '',
       scale: '',
@@ -180,13 +181,13 @@ export default {
         that.$data.finacial = response.data.data.financing;
         that.$data.logoPic = nginx.nginxaddress + response.data.data.ico;
         that.$data.ico = response.data.data.ico;
-        let pics = response.data.data.images.split(",");
-        that.$data.corpImgs.splice(0,that.$data.corpImgs.length);
-        for(let i = 0 ; i < pics.length ; i++) {
+        const pics = response.data.data.images.split(',');
+        that.$data.corpImgs.splice(0, that.$data.corpImgs.length);
+        for (let i = 0; i < pics.length; i += 1) {
           that.$data.corpImgs.push({
             name: pics[i],
-            value: nginx.nginxaddress + pics[i]
-          })
+            value: nginx.nginxaddress + pics[i],
+          });
         }
       });
     },
@@ -194,11 +195,11 @@ export default {
       if (this.$refs.logo.files[0] !== undefined) {
         this.$confirm('确定要更换公司图标吗？', (res) => {
           if (res === true) {
-            let params = new FormData();
-            params.append("file",this.$refs.logo.files[0]);
+            const params = new FormData();
+            params.append('file', this.$refs.logo.files[0]);
             const that = this;
             api.uploadPic(params).then((response) => {
-              console.log(response.data)
+              // console.log(response.data);
               that.$data.logoPic = nginx.nginxaddress + response.data.data;
               that.$data.ico = response.data.data;
               this.$alert('更改成功');
@@ -213,16 +214,16 @@ export default {
       if (this.$refs.newpic.files[0] !== undefined) {
         this.$confirm('确定要添加图片吗？', (res) => {
           if (res === true) {
-            let params = new FormData();
-            params.append("file",this.$refs.newpic.files[0]);
+            const params = new FormData();
+            params.append('file', this.$refs.newpic.files[0]);
             const that = this;
             api.uploadPic(params).then((response) => {
-              console.log(response.data)
+              // console.log(response.data);
               that.$data.corpImgs.push(
                 {
-                  name:response.data.data,
-                  value: nginx.nginxaddress + response.data.data
-                }
+                  name: response.data.data,
+                  value: nginx.nginxaddress + response.data.data,
+                },
               );
               this.$alert('添加成功');
             });
@@ -236,35 +237,32 @@ export default {
       const that = this;
       this.$confirm('确定修改公司信息吗？', (res) => {
         if (res === true) {
-          let params = new URLSearchParams();
-          params.append("capital",that.$data.capital);
-          params.append("url",that.$data.url);
-          params.append("description",that.$data.description);
-          params.append("address",that.$data.address);
-          params.append("ico",that.$data.ico);
-          let img = "";
-          for(let i = 0 ; i < that.$data.corpImgs.length ; i++) {
-            if(i === 0) {
+          const params = new URLSearchParams();
+          params.append('capital', that.$data.capital);
+          params.append('url', that.$data.url);
+          params.append('description', that.$data.description);
+          params.append('address', that.$data.address);
+          params.append('ico', that.$data.ico);
+          let img = '';
+          for (let i = 0; i < that.$data.corpImgs.length; i += 1) {
+            if (i === 0) {
               img += that.$data.corpImgs[0].name;
-            }else {
-              img += "," + that.$data.corpImgs[0].name;
+            } else {
+              img += `,${that.$data.corpImgs[0].name}`;
             }
           }
-          params.append("images",img);
+          params.append('images', img);
           api.update(that.companyId, params).then((response) => {
-            console.log(response.data)
-            if(response.data.code === 200) {
+            // console.log(response.data);
+            if (response.data.code === 200) {
               this.$alert('修改成功');
               that.getCompanyInfo();
-            }else {
+            } else {
               this.$alert('修改失败');
             }
           });
-        } else {
-
         }
       });
-
     },
     deleteImg(index) {
       this.$confirm('确定要删除图片吗？', (res) => {

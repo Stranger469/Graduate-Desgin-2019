@@ -25,7 +25,7 @@
             <span><div class="btn primary">修改</div></span>
           </div>
         </div>
-        <div class="card" style="margin: 0 10px 0 10px">
+        <div class="card" style="margin: 0 10px 0 10px" v-if="empl[1]">
           <div class="row">
             <div class="name">{{ empl[1].name }}<span class="close">x</span></div>
           </div>
@@ -38,7 +38,8 @@
             <span><div class="btn primary">修改</div></span>
           </div>
         </div>
-        <div class="card">
+        <div class="card" style="opacity:0" v-else></div>
+        <div class="card" v-if="empl[2]">
           <div class="row">
             <div class="name">{{ empl[2].name }}<span class="close">x</span>
           </div>
@@ -52,6 +53,7 @@
             <span><div class="btn primary">修改</div></span>
           </div>
         </div>
+        <div class="card" style="opacity:0" v-else></div>
       </div>
     </div>
     <footer>
@@ -80,8 +82,6 @@ export default {
           { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
         ],
         [
-          { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
-          { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
           { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
         ],
       ],
