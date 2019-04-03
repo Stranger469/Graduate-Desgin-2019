@@ -156,8 +156,7 @@ export default {
     };
   },
   mounted() {
-    this.companyId = this.$route.query.companyId;
-    console.log(this.$route.query.companyId);
+    this.companyId = sessionStorage.getItem("companyId");
     this.getCompanyInfo();
   },
   components: {

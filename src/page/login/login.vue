@@ -198,6 +198,7 @@ export default {
             } else {
               sessionStorage.setItem('userToken', res.data.data.token);
               sessionStorage.setItem('loginType', that.loginType);
+              sessionStorage.setItem('companyId', response.data.data.bcompany.businessId);
               this.$router.push({ name: 'Empl' });
             }
           });
@@ -224,7 +225,8 @@ export default {
           sessionStorage.setItem('userToken', response.data.data.token);
           sessionStorage.setItem('loginType', that.loginType);
           console.log(response.data.data.bcompany.businessId);
-          that.$router.push({ name: 'Corp', query:{ companyId : response.data.data.bcompany.businessId} });
+          sessionStorage.setItem('companyId', response.data.data.bcompany.businessId);
+          that.$router.push({ name: 'Corp'});
         }
       });
     },

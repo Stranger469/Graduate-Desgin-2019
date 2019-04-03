@@ -5,8 +5,8 @@
         <div class="btn primary">添加</div>
       </div>
       <div>
-        <input type="text" placeholder="姓名">
-        <input type="text" placeholder="部门名">
+        <input type="text" placeholder="姓名" v-model="likeName">
+        <input type="text" placeholder="部门名" v-model="likeDeptName">
         <div class="btn primary">搜索</div>
       </div>
     </header>
@@ -64,26 +64,29 @@
 <script>
 import { corpMixin } from '@/mixins/NavigationGuards';
 import Page from '@/components/Pages/index';
+import api from '@/api/emplMgn';
 
 export default {
   mixins: [corpMixin],
   name: 'EmplMgn',
   data() {
     return {
+      likeName: '',
+      likeDeptName: '',
       empls: [
-        [
-          { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
-          { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
-          { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
-        ],
-        [
-          { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
-          { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
-          { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
-        ],
-        [
-          { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
-        ],
+        // [
+        //   { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
+        //   { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
+        //   { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
+        // ],
+        // [
+        //   { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
+        //   { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
+        //   { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
+        // ],
+        // [
+        //   { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
+        // ],
       ],
       curPage: 1,
       total: 1000,
@@ -93,7 +96,43 @@ export default {
   components: {
     Page,
   },
+  // mounted() {
+  //   this.companyId = sessionStorage.getItem('companyId');
+  //   this.getAllEmpl();
+  // },
   methods: {
+    getAllEmpl() {
+      const that = this;
+      const params = new URLSearchParams();
+      params.append('companyId', sessionStorage.getItem('companyId'));
+      params.append('rows', that.$data.pageSize);
+      params.append('page', that.$data.curPage);
+      params.append('deptName', that.$data.likeDeptName);
+      params.append('name', that.$data.likeName);
+      that.$data.empls.splice(0, that.$data.empls.length);
+      api.getAllEmploApi(params).then((response) => {
+        const newarray = [];
+        for (let i = 0; i < response.data.rows.length; i++) {
+          console.log(response.data.rows[i]);
+          newarray.push({
+            name: response.data.rows[i].sysUser.realname,
+            tel: response.data.rows[i].sysUser.phone,
+            dept: response.data.rows[i].bdept.name,
+            email: response.data.rows[i].bdept.email,
+          });
+          if (newarray.length === 3) {
+            that.$data.empls.push(newarray);
+            newarray.splice(0, newarray.length);
+          }
+        }
+        if (newarray.length !== 0) {
+          that.$data.empls.push(newarray);
+        }
+        that.$data.total = response.data.total;
+        that.$data.curPage = response.data.pageNu;
+        console.log(that.$data.empls);
+      });
+    },
     setCurPage(page) {
       this.curPage = page;
     },
