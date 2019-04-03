@@ -159,7 +159,7 @@ export default {
         that.$data.total = response.data.total;
         that.$data.curPage = response.data.pageNu;
         // console.log(that.$data.empls);
-        console.log(that.$data.empls)
+        console.log(that.$data.empls);
       });
     },
     addEmpl(empl) {
@@ -173,8 +173,8 @@ export default {
       params.append('phone', empl.tel);
       params.append('desc', empl.desc);
       api.addApi(params).then((response) => {
-        if(response.data.code === 200) {
-          this.$alert("添加成功");
+        if (response.data.code === 200) {
+          this.$alert('添加成功');
           this.getAllEmpl();
         } else {
           this.$alert(response.data.message);
@@ -190,12 +190,12 @@ export default {
       // TODO 修改员工接口，empl是取得的员工对象
     },
     deleteEmpl(empl) {
-      console.log(empl)
+      console.log(empl);
       this.$confirm('确定要移除该员工吗？', (res) => {
         if (res) {
           api.deleteApi(empl.id).then((response) => {
-            if(response.data.code === 200) {
-              this.$alert("删除成功");
+            if (response.data.code === 200) {
+              this.$alert('删除成功');
               this.getAllEmpl();
             } else {
               this.$alert(response.data.message);
