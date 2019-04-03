@@ -157,10 +157,10 @@ export default {
     type1Login() {
       const that = this;
       // 判断手机验证码是否正确，错误则显示手机验证码错误
-      let params = new URLSearchParams();
-      params.append("id",that.$data.phoneid);
-      params.append("code",that.$data.SNSverifyCode);
-      params.append("username",that.$data.tel);
+      const params = new URLSearchParams();
+      params.append('id', that.$data.phoneid);
+      params.append('code', that.$data.SNSverifyCode);
+      params.append('username', that.$data.tel);
       api.candidateLoginByPhone(params).then((response) => {
         // console.log(response);
         if (response.data.code === 400) {
@@ -168,10 +168,10 @@ export default {
         } else {
           this.$alert('登陆成功');
           this.snsWrong = '';
-          //存入变量
+          // 存入变量
           sessionStorage.setItem('userToken', response.data.data);
           sessionStorage.setItem('loginType', that.loginType);
-          //TODO 跳转到求职者
+          // TODO 跳转到求职者
         }
       });
     },
@@ -187,15 +187,15 @@ export default {
         code: that.$data.graphicVerifyCode,
       }).then((response) => {
         // 如果正确则发送短信验证码
-        let params = new URLSearchParams();
-        params.append("password",that.$data.psw);
-        params.append("username",that.$data.tel);
+        const params = new URLSearchParams();
+        params.append('password', that.$data.psw);
+        params.append('username', that.$data.tel);
         if (response.data.data === true) {
           that.gvcWrong = '';
           api.recruiterLoginByPassword(params).then((res) => {
             if (res.data.code !== 200) {
               that.pswWrong = '用户名或密码错误';
-            }else {
+            } else {
               sessionStorage.setItem('userToken', res.data.data);
               sessionStorage.setItem('loginType', that.loginType);
               this.$router.push({ name: 'Empl' });
@@ -210,17 +210,17 @@ export default {
     type2Login() {
       const that = this;
       // 判断手机验证码是否正确，错误则显示手机验证码错误
-      let params = new URLSearchParams();
-      params.append("id",that.$data.phoneid);
-      params.append("code",that.$data.SNSverifyCode);
-      params.append("username",that.$data.tel);
+      const params = new URLSearchParams();
+      params.append('id', that.$data.phoneid);
+      params.append('code', that.$data.SNSverifyCode);
+      params.append('username', that.$data.tel);
       api.recruiterLoginByPhone(params).then((response) => {
         if (response.data.code === 400) {
           that.snsWrong = '短信验证码不正确';
         } else {
           this.$alert('登陆成功');
           this.snsWrong = '';
-          //存入变量
+          // 存入变量
           sessionStorage.setItem('userToken', response.data.data);
           sessionStorage.setItem('loginType', that.loginType);
           that.$router.push({ name: 'Corp' });
@@ -241,16 +241,16 @@ export default {
         // 如果正确则发送短信验证码
         if (response.data.data === true) {
           that.gvcWrong = '';
-          let params = new URLSearchParams();
-          params.append("password",that.$data.psw);
-          params.append("username",that.$data.tel);
+          const params = new URLSearchParams();
+          params.append('password', that.$data.psw);
+          params.append('username', that.$data.tel);
           api.adminLogin(params).then((res) => {
-            if(res.data.data === "1") {
+            if (res.data.data === '1') {
               this.$alert('登陆成功');
               sessionStorage.setItem('loginType', that.loginType);
-              //TODO 跳转到系统管理员
+              // TODO 跳转到系统管理员
             }
-            if(res.data.data === "0") {
+            if (res.data.data === '0') {
               that.pswWrong = '用户名或密码错误';
             }
           });
@@ -261,7 +261,7 @@ export default {
       });
     },
     submit() {
-      console.log(this.loginType)
+      console.log(this.loginType);
       switch (this.loginType) {
         case 1:
           this.type1Login();
@@ -278,7 +278,6 @@ export default {
         default:
           break;
       }
-
     },
     switchType(type) {
       this.loginType = type;
