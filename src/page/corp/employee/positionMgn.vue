@@ -24,8 +24,8 @@
         <tbody>
           <template v-for="pos of tableData">
             <tr :key="pos.id">
-              <td class="expend" @click="expend($event)">
-                <img src="@/assets/img/u4210.png"/>
+              <td class="expend">
+                <img @click="expend($event)" src="@/assets/img/u4210.png"/>
               </td>
               <td>{{ pos.posName }}</td>
               <td>{{ pos.posLoc }}</td>
@@ -163,36 +163,6 @@ export default {
           locDetial: '白云山',
           desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
         },
-        {
-          id: '10010',
-          posName: '扫地',
-          posLoc: '广州',
-          edubackground: '博士',
-          exp: '10年以上',
-          scale: '100~500元',
-          locDetial: '白云山',
-          desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
-        },
-        {
-          id: '10011',
-          posName: '扫地',
-          posLoc: '广州',
-          edubackground: '博士',
-          exp: '10年以上',
-          scale: '100~500元',
-          locDetial: '白云山',
-          desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
-        },
-        {
-          id: '10012',
-          posName: '扫地',
-          posLoc: '广州',
-          edubackground: '博士',
-          exp: '10年以上',
-          scale: '100~500元',
-          locDetial: '白云山',
-          desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
-        },
       ],
 
       curPage: 1,
@@ -213,11 +183,16 @@ export default {
       this.curPage = page;
     },
     expend(e) {
-      const display = e.currentTarget.parentNode.nextSibling.nextSibling.style.display;
-      if (display === 'none') {
-        e.currentTarget.parentNode.nextSibling.nextSibling.style.display = '';
+      if (e.currentTarget.className === '') {
+        e.currentTarget.className = 'rotate';
       } else {
-        e.currentTarget.parentNode.nextSibling.nextSibling.style.display = 'none';
+        e.currentTarget.className = '';
+      }
+      const display = e.currentTarget.parentNode.parentNode.nextSibling.nextSibling.style.display;
+      if (display === 'none') {
+        e.currentTarget.parentNode.parentNode.nextSibling.nextSibling.style.display = '';
+      } else {
+        e.currentTarget.parentNode.parentNode.nextSibling.nextSibling.style.display = 'none';
       }
     },
   },

@@ -255,7 +255,7 @@ form {
   }
   tbody {
     tr{
-      height: 45px;
+      height: 60px;
       td {
         text-align: center;
         border: 0.5px solid #E4E4E4;
@@ -270,6 +270,11 @@ form {
             display: inline-block;
             user-select: none;
             transform: rotate(-90deg);
+            padding: 10px;
+            transition: all .1s linear;
+            &.rotate {
+              transform: rotate(90deg);
+            }
           }
         }
         &>a {
