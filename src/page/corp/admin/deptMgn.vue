@@ -31,6 +31,7 @@
 import { corpMixin } from '@/mixins/NavigationGuards';
 import Node from '@/components/treeNode/TreeNode';
 import DeptDialog from '@/components/Dialogs/addDept';
+import api from '@/api/deptMgn';
 
 export default {
   mixins: [corpMixin],
@@ -40,79 +41,53 @@ export default {
       layer: '',
       html: [],
       tree: {
-        name: '总部门',
-        id: 10000,
-        children: [
-          {
-            name: '部门1',
-            id: 10001,
-            children: [
-              {
-                name: '部门1.2',
-                id: 10004,
-                children: [
-                  {
-                    name: '部门1.2.1',
-                    id: 10008,
-                    children: [
-                      {
-                        name: '部门1.1',
-                        id: 10009,
-                        children: null,
-                      }, {
-                        name: '部门1.1',
-                        id: 100010,
-                        children: null,
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            name: '部门2',
-            id: 10002,
-            children: [
-              {
-                name: '部门2.1',
-                id: 10005,
-                children: null,
-              },
-              {
-                name: '部门2.2',
-                id: 10006,
-                children: null,
-              },
-              {
-                name: '部门2.3',
-                id: 10007,
-                children: null,
-              },
-            ],
-          },
-          {
-            name: '部门3',
-            id: 10010,
-            children: [
-              {
-                name: '部门2.1',
-                id: 10011,
-                children: null,
-              },
-              {
-                name: '部门2.2',
-                id: 10012,
-                children: null,
-              },
-              {
-                name: '部门2.3',
-                id: 10013,
-                children: null,
-              },
-            ],
-          },
-        ],
+        // name: '总部门',
+        // id: 10000,
+        // children: [
+        //   {
+        //     name: '部门1',
+        //     id: 10001,
+        //     children: [
+        //       {
+        //         name: '部门1.1',
+        //         id: 10003,
+        //         children: null,
+        //       },
+        //       {
+        //         name: '部门1.2',
+        //         id: 10004,
+        //         children: [
+        //           {
+        //             name: '部门1.2.1',
+        //             id: 10008,
+        //             children: null,
+        //           },
+        //         ],
+        //       },
+        //     ],
+        //   },
+        //   {
+        //     name: '部门2',
+        //     id: 10002,
+        //     children: [
+        //       {
+        //         name: '部门2.1',
+        //         id: 10005,
+        //         children: null,
+        //       },
+        //       {
+        //         name: '部门2.2',
+        //         id: 10006,
+        //         children: null,
+        //       },
+        //       {
+        //         name: '部门2.3',
+        //         id: 10007,
+        //         children: null,
+        //       },
+        //     ],
+        //   },
+        // ],
       },
       addDialogShow: false,
       modifyDialogShow: false,
@@ -128,15 +103,29 @@ export default {
     };
   },
   methods: {
+    getDeptTree() {
+      this.html = [];
+      this.tree = {};
+      this.layer = '';
+      const params = new URLSearchParams();
+      params.append('companyId', sessionStorage.getItem('companyId'));
+      api.getDeptTreeApi(params).then((response) => {
+        // console.log(response.data.data);
+        this.tree = response.data.data;
+        // console.log(this.tree);
+        this.renderTree(this.tree, 0, 0);
+        // console.log(this.html);
+      });
+    },
     renderTree(obj, index, length) {
       this.html.push({
         name: this.layer + obj.name,
-        id: obj.id,
+        id: obj.businessId,
       });
-      if (obj.children !== null) {
+      if (obj.bdepts.length !== 0) {
         this.layer += '　　';
-        obj.children.forEach((e, i) => {
-          this.renderTree(e, i, obj.children.length);
+        obj.bdepts.forEach((e, i) => {
+          this.renderTree(e, i, obj.bdepts.length);
         });
       }
       if (index + 1 === length) {
@@ -156,23 +145,46 @@ export default {
     deleteDeptClicked(node) {
       this.$confirm('确定要删除部门吗？', (res) => {
         if (res) {
-          // TODO 删除部门逻辑，node里面有name和id
+          api.deleteApi(node.id).then((response) => {
+            if (response.data.code === 200) {
+              this.getDeptTree();
+              this.$alert('删除成功');
+            } else {
+              this.$alert(response.data.message);
+            }
+          });
         }
       });
     },
     addDialog(obj) {
       this.newDept.name = obj.name;
       this.addDialogShow = false;
-      // TODO 添加新部门接口逻辑，刷新树
+      const params = new URLSearchParams();
+      params.append('companyId', sessionStorage.getItem('companyId'));
+      params.append('parentId', this.newDept.parentId);
+      params.append('name', this.newDept.name);
+      api.addDeptApi(params).then((response) => {
+        if (response.data.code === 200) {
+          this.getDeptTree();
+          this.$alert('添加成功');
+        }
+      });
     },
     modifyDialog(obj) {
       this.modifyDialogShow = false;
       // obj有name和id两个属性
-      // TODO 修改部门逻辑
+      const params = new URLSearchParams();
+      params.append('name', obj.name);
+      api.updateApi(obj.id, params).then((response) => {
+        if (response.data.code === 200) {
+          this.getDeptTree();
+          this.$alert('修改成功');
+        }
+      });
     },
   },
   mounted() {
-    this.renderTree(this.tree, 0, 0);
+    this.getDeptTree();
   },
   components: {
     Node,
