@@ -11,6 +11,15 @@ export default {
     return axi.get('/auth/getPhoneValidate', { params: p });
   },
   candidateLoginByPhone(p) {
-    return axi.post('/auth/getPhoneValidate', p);
+    return axi.post('/auth/candidateLoginByPhone', p);
+  },
+  recruiterLoginByPhone(p) {
+    return axi.post('/auth/recruiterLoginByPhone', p);
+  },
+  recruiterLoginByPassword(p) {
+    return axi.post('/auth/recruiterLoginByPassword', p);
+  },
+  adminLogin(p) {
+    return axi.post('/auth/adminLogin', p);
   },
 };

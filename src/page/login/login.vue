@@ -33,7 +33,7 @@
         <label class="form-item-left"></label>
         <div class="form-item-right gvc-container">
           <input class="gvc" type="text" v-model="graphicVerifyCode" placeholder="验证码">
-          <img v-bind:src="imgpath" width="80" height="30">
+          <img v-bind:src="imgpath" width="80" height="30" @click="getImgValidate">
           <div class="wrong">{{ gvcWrong }}</div>
         </div>
       </div>
@@ -95,6 +95,16 @@ export default {
     });
   },
   methods: {
+    getImgValidate() {
+      const that = this;
+      api.getImgValidate({}).then((response) => {
+        // console.log(response);
+        // console.log(response.data.data.base64);
+        // console.log(response.data.data.id);
+        that.$data.imgpath = response.data.data.base64;
+        that.$data.imgid = response.data.data.id;
+      });
+    },
     sendMsgFn() {
       // 简单逻辑：如果手机号长度不等于11位，则显示手机号错误
       if (this.tel.length !== 11) {
@@ -107,7 +117,6 @@ export default {
       }
       this.gvcWrong = '';
       this.telWrong = '';
-
       const that = this;
       if (this.countdown) {
         return;
@@ -139,42 +148,137 @@ export default {
               }
             }, 1000);
           });
-        // 如果错误则显示图形验证码错误
+          // 如果错误则显示图形验证码错误
+        } else {
+          that.gvcWrong = '验证码不正确';
+        }
+      });
+    },
+    type1Login() {
+      const that = this;
+      // 判断手机验证码是否正确，错误则显示手机验证码错误
+      let params = new URLSearchParams();
+      params.append("id",that.$data.phoneid);
+      params.append("code",that.$data.SNSverifyCode);
+      params.append("username",that.$data.tel);
+      api.candidateLoginByPhone(params).then((response) => {
+        // console.log(response);
+        if (response.data.code === 400) {
+          that.snsWrong = response.data.message;
+        } else {
+          this.$alert('登陆成功');
+          this.snsWrong = '';
+          //存入变量
+          sessionStorage.setItem('userToken', response.data.data);
+          sessionStorage.setItem('loginType', that.loginType);
+          //TODO 跳转到求职者
+        }
+      });
+    },
+    type3Login() {
+      const that = this;
+      if (this.graphicVerifyCode === '') {
+        this.gvcWrong = '请输入验证码';
+        return;
+      }
+      // 判断图形验证码是否正确
+      api.validateImg({
+        id: that.$data.imgid,
+        code: that.$data.graphicVerifyCode,
+      }).then((response) => {
+        // 如果正确则发送短信验证码
+        let params = new URLSearchParams();
+        params.append("password",that.$data.psw);
+        params.append("username",that.$data.tel);
+        if (response.data.data === true) {
+          that.gvcWrong = '';
+          api.recruiterLoginByPassword(params).then((res) => {
+            if (res.data.code !== 200) {
+              that.pswWrong = '用户名或密码错误';
+            }else {
+              sessionStorage.setItem('userToken', res.data.data);
+              sessionStorage.setItem('loginType', that.loginType);
+              this.$router.push({ name: 'Empl' });
+            }
+          });
+          // 如果错误则显示图形验证码错误
+        } else {
+          that.gvcWrong = '验证码不正确';
+        }
+      });
+    },
+    type2Login() {
+      const that = this;
+      // 判断手机验证码是否正确，错误则显示手机验证码错误
+      let params = new URLSearchParams();
+      params.append("id",that.$data.phoneid);
+      params.append("code",that.$data.SNSverifyCode);
+      params.append("username",that.$data.tel);
+      api.recruiterLoginByPhone(params).then((response) => {
+        if (response.data.code === 400) {
+          that.snsWrong = '短信验证码不正确';
+        } else {
+          this.$alert('登陆成功');
+          this.snsWrong = '';
+          //存入变量
+          sessionStorage.setItem('userToken', response.data.data);
+          sessionStorage.setItem('loginType', that.loginType);
+          that.$router.push({ name: 'Corp' });
+        }
+      });
+    },
+    type4Login() {
+      const that = this;
+      if (this.graphicVerifyCode === '') {
+        this.gvcWrong = '请输入验证码';
+        return;
+      }
+      // 判断图形验证码是否正确
+      api.validateImg({
+        id: that.$data.imgid,
+        code: that.$data.graphicVerifyCode,
+      }).then((response) => {
+        // 如果正确则发送短信验证码
+        if (response.data.data === true) {
+          that.gvcWrong = '';
+          let params = new URLSearchParams();
+          params.append("password",that.$data.psw);
+          params.append("username",that.$data.tel);
+          api.adminLogin(params).then((res) => {
+            if(res.data.data === "1") {
+              this.$alert('登陆成功');
+              sessionStorage.setItem('loginType', that.loginType);
+              //TODO 跳转到系统管理员
+            }
+            if(res.data.data === "0") {
+              that.pswWrong = '用户名或密码错误';
+            }
+          });
+          // 如果错误则显示图形验证码错误
         } else {
           that.gvcWrong = '验证码不正确';
         }
       });
     },
     submit() {
-      const that = this;
-      // 判断手机验证码是否正确，错误则显示手机验证码错误
-      api.candidateLoginByPhone({
-        id: that.$data.phoneid,
-        code: that.$data.SNSverifyCode,
-        username: that.$data.tel,
-      }).then((response) => {
-        // console.log(response);
-        if (response.data.code === 400) {
-          that.snsWrong = '短信验证码不正确';
-        } else {
-          this.$alert('登陆成功');
-          this.snsWrong = '';
-          // console.log(response);
-          // TODO 这里存放一个全局变量，将TOKEN存入（userToken）
-          sessionStorage.setItem('loginType', this.loginType);
-          switch (this.loginType) {
-            // TODO case1 & case4
-            case 2:
-              this.$router.push({ name: 'Empl' });
-              break;
-            case 3:
-              this.$router.push({ name: 'Corp' });
-              break;
-            default:
-              break;
-          }
-        }
-      });
+      console.log(this.loginType)
+      switch (this.loginType) {
+        case 1:
+          this.type1Login();
+          break;
+        case 2:
+          this.type2Login();
+          break;
+        case 3:
+          this.type3Login();
+          break;
+        case 4:
+          this.type4Login();
+          break;
+        default:
+          break;
+      }
+
     },
     switchType(type) {
       this.loginType = type;
