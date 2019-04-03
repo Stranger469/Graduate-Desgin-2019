@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="form-item">
-        <label class="require" for="user-psw">密码:</label>
+        <label for="user-psw">密码:</label>
         <input id="user-psw" v-model="outData.psw" type="text" placeholder="密码">
         <div class="error_text">
           {{ hasError__psw }}
@@ -156,12 +156,12 @@ export default{
       } else {
         this.hasError__email = '';
       }
-      if (!this.outData.psw || this.getStrLen(this.outData.psw) === '') {
-        this.hasError__psw = '请填写密码';
-        flag = false;
-      } else {
-        this.hasError__psw = '';
-      }
+      // if (!this.outData.psw || this.getStrLen(this.outData.psw) === '') {
+      //   this.hasError__psw = '请填写密码';
+      //   flag = false;
+      // } else {
+      //   this.hasError__psw = '';
+      // }
       if (!this.dept) {
         this.hasError__dept = '请选择部门';
         flag = false;
