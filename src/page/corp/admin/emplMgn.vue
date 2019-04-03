@@ -7,7 +7,7 @@
       <div>
         <input type="text" placeholder="姓名" v-model="likeName">
         <input type="text" placeholder="部门名" v-model="likeDeptName">
-        <div class="btn primary">搜索</div>
+        <div class="btn primary" @click="getAllEmpl">搜索</div>
       </div>
     </header>
     <div class="card-container">
@@ -146,9 +146,10 @@ export default {
             tel: response.data.rows[i].sysUser.phone,
             dept: response.data.rows[i].bdept.name,
             email: response.data.rows[i].sysUser.email,
+            id: response.data.rows[i].sysUser.businessId,
           });
           if (newarray.length === 3) {
-            that.$data.empls.push(newarray);
+            that.$data.empls.push([...newarray]);
             newarray.splice(0, newarray.length);
           }
         }
@@ -158,11 +159,27 @@ export default {
         that.$data.total = response.data.total;
         that.$data.curPage = response.data.pageNu;
         // console.log(that.$data.empls);
+        console.log(that.$data.empls)
       });
     },
     addEmpl(empl) {
       this.addEmplShow = false;
-      // TODO 增加员工接口，empl是取得的员工对象
+      const params = new URLSearchParams();
+      params.append('companyId', sessionStorage.getItem('companyId'));
+      params.append('deptId', empl.dept);
+      params.append('password', empl.psw);
+      params.append('realName', empl.name);
+      params.append('email', empl.email);
+      params.append('phone', empl.tel);
+      params.append('desc', empl.desc);
+      api.addApi(params).then((response) => {
+        if(response.data.code === 200) {
+          this.$alert("添加成功");
+          this.getAllEmpl();
+        } else {
+          this.$alert(response.data.message);
+        }
+      });
     },
     modifyEmplClicked(empl) {
       this.modifyEmplData = { ...empl };
@@ -173,9 +190,17 @@ export default {
       // TODO 修改员工接口，empl是取得的员工对象
     },
     deleteEmpl(empl) {
+      console.log(empl)
       this.$confirm('确定要移除该员工吗？', (res) => {
         if (res) {
-          // TODO 删除逻辑
+          api.deleteApi(empl.id).then((response) => {
+            if(response.data.code === 200) {
+              this.$alert("删除成功");
+              this.getAllEmpl();
+            } else {
+              this.$alert(response.data.message);
+            }
+          });
         }
       });
     },
