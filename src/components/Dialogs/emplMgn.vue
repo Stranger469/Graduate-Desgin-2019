@@ -31,7 +31,6 @@
       </div>
       <div class="form-item">
         <label class="require" for="user-dept">部门:</label>
-        <!-- <input id="user-dept" v-model="outData.dept" type="text" placeholder="部门"> -->
         <Select
           width="195px"
           v-model="dept"
@@ -76,11 +75,11 @@ export default{
   data() {
     return {
       outData: {
-        name: this.dialogData.name,
-        tel: this.dialogData.tel,
-        email: this.dialogData.email,
-        psw: this.dialogData.psw,
-        desc: this.dialogData.desc,
+        name: '',
+        tel: '',
+        email: '',
+        psw: '',
+        desc: '',
       },
       hasError__name: '',
       hasError__tel: '',
@@ -89,7 +88,7 @@ export default{
       hasError__dept: '',
       hasError__desc: '',
       depts: [],
-      dept: this.dialogData.dept,
+      dept: '',
     };
   },
   watch: {
