@@ -223,6 +223,7 @@ export default {
           // 存入变量
           sessionStorage.setItem('userToken', response.data.data.token);
           sessionStorage.setItem('loginType', that.loginType);
+          console.log(response.data.data.bcompany.businessId);
           that.$router.push({ name: 'Corp', query:{ companyId : response.data.data.bcompany.businessId} });
         }
       });

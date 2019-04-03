@@ -155,8 +155,8 @@ export default {
     };
   },
   mounted() {
-    // this.companyId = this.$router.query.companyId;
-    this.companyId = 'ecc17b8ef3f945a384735450f35b1a76';
+    this.companyId = this.$route.query.companyId;
+    console.log(this.$route.query.companyId);
     this.getCompanyInfo();
   },
   components: {
