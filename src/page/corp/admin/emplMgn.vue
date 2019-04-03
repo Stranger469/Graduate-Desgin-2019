@@ -118,7 +118,7 @@ export default {
             name: response.data.rows[i].sysUser.realname,
             tel: response.data.rows[i].sysUser.phone,
             dept: response.data.rows[i].bdept.name,
-            email: response.data.rows[i].bdept.email,
+            email: response.data.rows[i].sysUser.email,
           });
           if (newarray.length === 3) {
             that.$data.empls.push(newarray);
