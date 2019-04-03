@@ -53,13 +53,13 @@ export default {
     top: 0px;
     text-align: center;
     z-index: 11111;
-    background: rgba(0, 0, 0, 0.25);
+    background: rgba(0, 0, 0, 0.6);
   }
   .vconfirm-wrap{
     width: 100%;
     position: fixed;
     height: 0;
-    top: 20px;
+    top: -20px;
     text-align: center;
     z-index: 11111;
     background: rgba(0,0,0,0.45);
@@ -67,7 +67,6 @@ export default {
       display: inline-block;
       width: 330px;
       padding: 10px 15px;
-      border-radius: 8px;
       box-sizing: border-box;
       border: 1px solid #ebeef5;
       background: #fff;
@@ -84,7 +83,6 @@ export default {
       span{
         padding: 9px 15px;
         font-size: 12px;
-        border-radius: 3px;
         color: #fff;
         background-color: #0064D3;
         cursor: pointer;
@@ -100,12 +98,9 @@ export default {
   }
 
   .vconfirm-ani-enter-active,.vconfirm-ani-leave-active {
-    top: 20px;
-    opacity: 1;
-    transition: all .5s linear;
+    transition: opacity .5s;
   }
   .vconfirm-ani-enter,.vconfirm-ani-leave-to {
-    top: 0px;
     opacity: 0;
   }
 </style>
