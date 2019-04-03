@@ -96,10 +96,10 @@ export default {
   components: {
     Page,
   },
-  // mounted() {
-  //   this.companyId = sessionStorage.getItem('companyId');
-  //   this.getAllEmpl();
-  // },
+  mounted() {
+    this.companyId = sessionStorage.getItem('companyId');
+    this.getAllEmpl();
+  },
   methods: {
     getAllEmpl() {
       const that = this;
