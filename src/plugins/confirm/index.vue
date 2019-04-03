@@ -58,8 +58,8 @@ export default {
   .vconfirm-wrap{
     width: 100%;
     position: fixed;
-    height:0;
-    top:20px;
+    height: 0;
+    top: 20px;
     text-align: center;
     z-index: 11111;
     background: rgba(0,0,0,0.45);
@@ -100,12 +100,12 @@ export default {
   }
 
   .vconfirm-ani-enter-active,.vconfirm-ani-leave-active {
-    top:20px;
+    top: 20px;
     opacity: 1;
-    transition: all .1s linear;
+    transition: all .5s linear;
   }
   .vconfirm-ani-enter,.vconfirm-ani-leave-to {
-    top:10px;
+    top: 0px;
     opacity: 0;
   }
 </style>

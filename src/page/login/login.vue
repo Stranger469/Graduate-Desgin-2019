@@ -297,12 +297,12 @@ export default {
   .login {
     text-align: center;
     user-select: none;
-    height: 100%;
+    height: calc(100% - 50px);
     border: .1px transparent solid;
     background: url(../../assets/img/newbg.png) center bottom no-repeat;
     & > form {
       box-sizing: border-box;
-      border-radius: 20px;
+      // border-radius: 20px;
       box-shadow: 0px 10px 30px rgb(78, 138, 207);
       width: 500px;
       margin-top: 170px;

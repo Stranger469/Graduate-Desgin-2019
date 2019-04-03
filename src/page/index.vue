@@ -23,6 +23,6 @@ export default {
 @import url(../../static/style/site.comm.less);
 @import url(../../static/style/site.vars.less);
 .initPage {
-  height: calc(100% - 50px);
+  height: 100%;
 }
 </style>

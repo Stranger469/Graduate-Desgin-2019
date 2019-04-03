@@ -13,7 +13,7 @@
         <ul>
           <li><a>我要招聘</a></li>
           <li><a class="with-border">注册</a></li>
-          <li style="margin-left:0"><a class="with-border" href="#/login">登录</a></li>
+          <li style="margin:0"><a class="with-border" href="#/login">登录</a></li>
         </ul>
       </div>
     </div>
@@ -38,7 +38,7 @@ export default {
   height: 50px;
   background: @site-black;
   .m-header-container {
-    width: 1000px;
+    width: 1200px;
     height: 100%;
     margin: 0 auto;
     display: flex;
