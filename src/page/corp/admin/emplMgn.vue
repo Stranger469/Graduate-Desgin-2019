@@ -21,7 +21,7 @@
           </div>
           <div class="row">
             <span>电话:</span> {{ empl[0].tel }}
-            <span><font size="1">部门: </font>{{ empl[0].dept }}</span>
+            <span><font size="1">部门: </font>{{ empl[0].deptName }}</span>
           </div>
           <div class="row">
             <span>邮箱:</span> {{ empl[0].email }}
@@ -37,7 +37,7 @@
           </div>
           <div class="row">
             <span>电话:</span> {{ empl[1].tel }}
-            <span><font size="1">部门: </font>{{ empl[1].dept }}</span>
+            <span><font size="1">部门: </font>{{ empl[1].deptName }}</span>
           </div>
           <div class="row">
             <span>邮箱:</span> {{ empl[1].email }}
@@ -54,7 +54,7 @@
           </div>
           <div class="row">
             <span>电话:</span> {{ empl[2].tel }}
-            <span><font size="1">部门: </font>{{ empl[2].dept }}</span>
+            <span><font size="1">部门: </font>{{ empl[2].deptName }}</span>
           </div>
           <div class="row">
             <span>邮箱:</span> {{ empl[2].email }}
@@ -144,9 +144,11 @@ export default {
           newarray.push({
             name: response.data.rows[i].sysUser.realname,
             tel: response.data.rows[i].sysUser.phone,
-            dept: response.data.rows[i].bdept.name,
+            dept: response.data.rows[i].bdept.businessId,
+            deptName: response.data.rows[i].bdept.name,
             email: response.data.rows[i].sysUser.email,
             id: response.data.rows[i].sysUser.businessId,
+            desc: response.data.rows[i].brecruiter.description,
           });
           if (newarray.length === 3) {
             that.$data.empls.push([...newarray]);
@@ -187,7 +189,21 @@ export default {
     },
     modifyEmpl(empl) {
       this.modifyEmplShow = false;
-      // TODO 修改员工接口，empl是取得的员工对象
+      const params = new URLSearchParams();
+      params.append('deptId', empl.dept);
+      params.append('password', empl.psw);
+      params.append('realname', empl.name);
+      params.append('email', empl.email);
+      params.append('phone', empl.tel);
+      params.append('desc', empl.desc);
+      api.updateApi(empl.id, params).then((response) => {
+        if (response.data.code === 200) {
+          this.$alert('添加成功');
+          this.getAllEmpl();
+        } else {
+          this.$alert(response.data.message);
+        }
+      });
     },
     deleteEmpl(empl) {
       console.log(empl);

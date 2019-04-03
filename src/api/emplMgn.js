@@ -24,8 +24,8 @@ export default {
       },
     });
   },
-  update(id, p) {
-    return axi.put(`/bcompany/update/${id}`, p, {
+  updateApi(id, p) {
+    return axi.put(`/sysuser/update/${id}`, p, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
       },
