@@ -169,7 +169,7 @@ export default {
           this.$alert('登陆成功');
           this.snsWrong = '';
           // 存入变量
-          sessionStorage.setItem('userToken', response.data.data);
+          sessionStorage.setItem('userToken', response.data.data.token);
           sessionStorage.setItem('loginType', that.loginType);
           // TODO 跳转到求职者
         }
@@ -196,7 +196,7 @@ export default {
             if (res.data.code !== 200) {
               that.pswWrong = '用户名或密码错误';
             } else {
-              sessionStorage.setItem('userToken', res.data.data);
+              sessionStorage.setItem('userToken', res.data.data.token);
               sessionStorage.setItem('loginType', that.loginType);
               this.$router.push({ name: 'Empl' });
             }
@@ -221,9 +221,10 @@ export default {
           this.$alert('登陆成功');
           this.snsWrong = '';
           // 存入变量
-          sessionStorage.setItem('userToken', response.data.data);
+          sessionStorage.setItem('userToken', response.data.data.token);
           sessionStorage.setItem('loginType', that.loginType);
-          that.$router.push({ name: 'Corp' });
+          console.log(response.data.data.bcompany.businessId);
+          that.$router.push({ name: 'Corp', query:{ companyId : response.data.data.bcompany.businessId} });
         }
       });
     },
@@ -249,6 +250,7 @@ export default {
               this.$alert('登陆成功');
               sessionStorage.setItem('loginType', that.loginType);
               // TODO 跳转到系统管理员
+              sessionStorage.setItem('userToken', "fakeToken");
             }
             if (res.data.data === '0') {
               that.pswWrong = '用户名或密码错误';
