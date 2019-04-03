@@ -226,7 +226,7 @@ export default {
           sessionStorage.setItem('loginType', that.loginType);
           console.log(response.data.data.bcompany.businessId);
           sessionStorage.setItem('companyId', response.data.data.bcompany.businessId);
-          that.$router.push({ name: 'Corp'});
+          that.$router.push({ name: 'Corp' });
         }
       });
     },
@@ -252,7 +252,7 @@ export default {
               this.$alert('登陆成功');
               sessionStorage.setItem('loginType', that.loginType);
               // TODO 跳转到系统管理员
-              sessionStorage.setItem('userToken', "fakeToken");
+              sessionStorage.setItem('userToken', 'fakeToken');
             }
             if (res.data.data === '0') {
               that.pswWrong = '用户名或密码错误';

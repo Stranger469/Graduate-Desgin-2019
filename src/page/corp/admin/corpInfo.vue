@@ -156,7 +156,7 @@ export default {
     };
   },
   mounted() {
-    this.companyId = sessionStorage.getItem("companyId");
+    this.companyId = sessionStorage.getItem('companyId');
     this.getCompanyInfo();
   },
   components: {

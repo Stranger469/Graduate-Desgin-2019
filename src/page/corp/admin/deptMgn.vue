@@ -48,18 +48,23 @@ export default {
             id: 10001,
             children: [
               {
-                name: '部门1.1',
-                id: 10003,
-                children: null,
-              },
-              {
                 name: '部门1.2',
                 id: 10004,
                 children: [
                   {
                     name: '部门1.2.1',
                     id: 10008,
-                    children: null,
+                    children: [
+                      {
+                        name: '部门1.1',
+                        id: 10009,
+                        children: null,
+                      }, {
+                        name: '部门1.1',
+                        id: 100010,
+                        children: null,
+                      },
+                    ],
                   },
                 ],
               },
@@ -82,6 +87,27 @@ export default {
               {
                 name: '部门2.3',
                 id: 10007,
+                children: null,
+              },
+            ],
+          },
+          {
+            name: '部门3',
+            id: 10010,
+            children: [
+              {
+                name: '部门2.1',
+                id: 10011,
+                children: null,
+              },
+              {
+                name: '部门2.2',
+                id: 10012,
+                children: null,
+              },
+              {
+                name: '部门2.3',
+                id: 10013,
                 children: null,
               },
             ],

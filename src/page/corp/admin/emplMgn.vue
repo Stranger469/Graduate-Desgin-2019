@@ -2,7 +2,7 @@
   <div class="emplMgn">
     <header>
       <div style="flex:1">
-        <div class="btn primary">添加</div>
+        <div class="btn primary" @click="addEmplShow = true">添加</div>
       </div>
       <div>
         <input type="text" placeholder="姓名" v-model="likeName">
@@ -14,7 +14,10 @@
       <div class="card-row" v-for="(empl, index) of empls" :key="index">
         <div class="card">
           <div class="row">
-            <div class="name">{{ empl[0].name }}<span class="close">x</span></div>
+            <div class="name">
+              {{ empl[0].name }}
+              <span class="close" @click="deleteEmpl(empl[0])">x</span>
+            </div>
           </div>
           <div class="row">
             <span>电话:</span> {{ empl[0].tel }}
@@ -22,12 +25,15 @@
           </div>
           <div class="row">
             <span>邮箱:</span> {{ empl[0].email }}
-            <span><div class="btn primary">修改</div></span>
+            <span><div class="btn primary" @click="modifyEmplClicked(empl[0])">修改</div></span>
           </div>
         </div>
         <div class="card" style="margin: 0 10px 0 10px" v-if="empl[1]">
           <div class="row">
-            <div class="name">{{ empl[1].name }}<span class="close">x</span></div>
+            <div class="name">
+              {{ empl[1].name }}
+              <span class="close" @click="deleteEmpl(empl[1])">x</span>
+            </div>
           </div>
           <div class="row">
             <span>电话:</span> {{ empl[1].tel }}
@@ -35,14 +41,16 @@
           </div>
           <div class="row">
             <span>邮箱:</span> {{ empl[1].email }}
-            <span><div class="btn primary">修改</div></span>
+            <span><div class="btn primary" @click="modifyEmplClicked(empl[1])">修改</div></span>
           </div>
         </div>
         <div class="card" style="opacity:0" v-else></div>
         <div class="card" v-if="empl[2]">
           <div class="row">
-            <div class="name">{{ empl[2].name }}<span class="close">x</span>
-          </div>
+            <div class="name">
+              {{ empl[2].name }}
+              <span class="close" @click="deleteEmpl(empl[2])">x</span>
+            </div>
           </div>
           <div class="row">
             <span>电话:</span> {{ empl[2].tel }}
@@ -50,7 +58,7 @@
           </div>
           <div class="row">
             <span>邮箱:</span> {{ empl[2].email }}
-            <span><div class="btn primary">修改</div></span>
+            <span><div class="btn primary" @click="modifyEmplClicked(empl[2])">修改</div></span>
           </div>
         </div>
         <div class="card" style="opacity:0" v-else></div>
@@ -59,10 +67,25 @@
     <footer>
       <Page @setCurPage="setCurPage" :curPage="curPage" :total="total" :pageSize="pageSize"></Page>
     </footer>
+    <empl-mgn-dialog
+      @close="addEmplShow = false"
+      @done="addEmpl"
+      :dialogData="{}"
+      title="添加员工"
+      :show="addEmplShow"
+    ></empl-mgn-dialog>
+    <empl-mgn-dialog
+      @close="modifyEmplShow = false"
+      @done="modifyEmpl"
+      :dialogData="modifyEmplData"
+      title="添加员工"
+      :show="modifyEmplShow"
+    ></empl-mgn-dialog>
   </div>
 </template>
 <script>
 import { corpMixin } from '@/mixins/NavigationGuards';
+import EmplMgnDialog from '@/components/Dialogs/emplMgn';
 import Page from '@/components/Pages/index';
 import api from '@/api/emplMgn';
 
@@ -75,26 +98,31 @@ export default {
       likeDeptName: '',
       empls: [
         // [
-        //   { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
-        //   { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
-        //   { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
+        //   { name: '李博今', tel: '17612082011', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
+        //   { name: '李博今', tel: '17612082022', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
+        //   { name: '李博今', tel: '17612082033', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
         // ],
         // [
-        //   { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
-        //   { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
-        //   { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
+        //   { name: '李博今', tel: '17612082044', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
+        //   { name: '李博今', tel: '17612082055', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
+        //   { name: '李博今', tel: '17612082066', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
         // ],
         // [
-        //   { name: '李博今', tel: '17612082048', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
+        //   { name: '李博今', tel: '17612082077', dept: '傻屌总部 - 傻屌分部', email: '1034356409@qq.com' },
         // ],
       ],
       curPage: 1,
       total: 1000,
       pageSize: 10,
+
+      addEmplShow: false,
+      modifyEmplShow: false,
+      modifyEmplData: null,
     };
   },
   components: {
     Page,
+    EmplMgnDialog,
   },
   mounted() {
     this.companyId = sessionStorage.getItem('companyId');
@@ -112,8 +140,7 @@ export default {
       that.$data.empls.splice(0, that.$data.empls.length);
       api.getAllEmploApi(params).then((response) => {
         const newarray = [];
-        for (let i = 0; i < response.data.rows.length; i++) {
-          console.log(response.data.rows[i]);
+        for (let i = 0; i < response.data.rows.length; i += 1) {
           newarray.push({
             name: response.data.rows[i].sysUser.realname,
             tel: response.data.rows[i].sysUser.phone,
@@ -130,7 +157,26 @@ export default {
         }
         that.$data.total = response.data.total;
         that.$data.curPage = response.data.pageNu;
-        console.log(that.$data.empls);
+        // console.log(that.$data.empls);
+      });
+    },
+    addEmpl(empl) {
+      this.addEmplShow = false;
+      // TODO 增加员工接口，empl是取得的员工对象
+    },
+    modifyEmplClicked(empl) {
+      this.modifyEmplData = { ...empl };
+      this.modifyEmplShow = true;
+    },
+    modifyEmpl(empl) {
+      this.modifyEmplShow = false;
+      // TODO 修改员工接口，empl是取得的员工对象
+    },
+    deleteEmpl(empl) {
+      this.$confirm('确定要移除该员工吗？', (res) => {
+        if (res) {
+          // TODO 删除逻辑
+        }
       });
     },
     setCurPage(page) {
