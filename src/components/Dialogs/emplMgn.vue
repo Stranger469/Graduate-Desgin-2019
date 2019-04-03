@@ -37,11 +37,7 @@
           v-model="dept"
           placeholder="部门名称">
           <Option
-            v-for="item of [{key: '0', value: '傻屌分部1'},
-            {key: '1', value: '傻屌分部2'},
-            {key: '2', value: '傻屌分部3'},
-            {key: '3', value: '傻屌分部4'},
-            {key: '4', value: '傻屌分部5'}]"
+            v-for="item of depts"
             :key="item.key"
             :value="item.key">
               {{ item.value }}
@@ -73,7 +69,7 @@
 import dialogBase from '@/components/Dialogs/base/dialogBase';
 import Option from '@/components/select/Option';
 import Select from '@/components/select/Select';
-
+import api from '@/api/emplMgn';
 export default{
   props: ['dialogData', 'show', 'title'],
   data() {
@@ -91,6 +87,7 @@ export default{
       hasError__psw: '',
       hasError__dept: '',
       hasError__desc: '',
+      depts:[],
       dept: this.dialogData.dept,
     };
   },
@@ -101,6 +98,20 @@ export default{
       },
       deep: true,
     },
+  },
+  mounted() {
+    const params = new URLSearchParams();
+    params.append('companyId', sessionStorage.getItem('companyId'));
+    this.depts = [];
+    api.getAllDeptApi(params).then((response) => {
+      const datas = response.data.data;
+      for(let i = 0 ; i < datas.length ; i++){
+        this.depts.push({
+          key: datas[i].businessId,
+          value: datas[i].name
+        })
+      }
+    });
   },
   methods: {
     getStrLen(str) {
