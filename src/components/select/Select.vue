@@ -275,6 +275,7 @@ export default {
       color: #ffffff;
     }
     .placeholder {
+      font-size: 10px;
       color: #7c7c7c !important;
     }
     .chosen {

@@ -37,7 +37,7 @@ export default {
     .content{
       position: relative;
       background-color: #fff;
-      top: -100px;
+      top: -50px;
     }
   }
   .fade-enter-active, .fade-leave-active {
