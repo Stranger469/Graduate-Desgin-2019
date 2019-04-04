@@ -4,7 +4,7 @@
       <div class="table-header">
         <p>面试管理</p>
         <div class="search-bar">
-          <div class="btn primary">添加</div>
+          <div class="btn primary" @click="addInterShow = true">添加</div>
         </div>
       </div>
       <table class="table">
@@ -31,8 +31,8 @@
               <td>{{ inter.email }}</td>
               <td>{{ inter.loc }}</td>
               <td>
-                <a>修改</a>&nbsp;&nbsp;
-                <a>删除</a>
+                <a @click="modifyInterClicked(inter)">修改</a>&nbsp;&nbsp;
+                <a @click="deleteInter(inter.id)">删除</a>
               </td>
             </tr>
             <tr :key="inter.id + 10000" style="display:none">
@@ -49,35 +49,93 @@
     <footer>
       <Page @setCurPage="setCurPage" :curPage="curPage" :total="total" :pageSize="pageSize"></Page>
     </footer>
+    <inter-mgn-dialog
+      @close="modifyInterShow = false"
+      @done="modifyInter"
+      :dialogData="modifyInterData"
+      title="修改部门信息"
+      :show="modifyInterShow"
+    ></inter-mgn-dialog>
+    <inter-mgn-dialog
+      @close="addInterShow = false"
+      @done="addInter"
+      :dialogData="{}"
+      title="修改部门信息"
+      :show="addInterShow"
+    ></inter-mgn-dialog>
   </div>
 </template>
 <script>
 import { emplMixin } from '@/mixins/NavigationGuards';
 import Page from '@/components/Pages/index';
-import PositionDialog from '@/components/Dialogs/addPosition';
+import InterMgnDialog from '@/components/Dialogs/interMgn';
 
 export default {
   mixins: [emplMixin],
-  name: 'PositionMgn',
+  name: 'InterMgn',
   data() {
     return {
       name: '',
       tableData: [
         {
           id: '10000',
-          name: '李博今',
+          name: '李博一心',
           date: '2019-4-5',
           time: '23:00',
           tel: '17612082048',
           email: 'lbj@sd.com',
-          loc: '中北天软',
-          desc: '带上简历',
+          loc: '望天楼',
+          desc: '犹豫, 就会败北',
+        },
+        {
+          id: '10001',
+          name: '李博二心',
+          date: '2019-4-6',
+          time: '23:00',
+          tel: '17612082048',
+          email: 'lbj@sd.com',
+          loc: '望天楼',
+          desc: '犹豫, 就会败北',
+        },
+        {
+          id: '10002',
+          name: '李博三心',
+          date: '2019-4-7',
+          time: '23:00',
+          tel: '17612082048',
+          email: 'lbj@sd.com',
+          loc: '望天楼',
+          desc: '犹豫, 就会败北',
+        },
+        {
+          id: '10003',
+          name: '李博四心',
+          date: '2019-4-8',
+          time: '23:00',
+          tel: '17612082048',
+          email: 'lbj@sd.com',
+          loc: '望天楼',
+          desc: '犹豫, 就会败北',
+        },
+        {
+          id: '10004',
+          name: '李博五心',
+          date: '2019-4-9',
+          time: '23:00',
+          tel: '17612082048',
+          email: 'lbj@sd.com',
+          loc: '望天楼',
+          desc: '犹豫, 就会败北',
         },
       ],
 
       curPage: 1,
       total: 1000,
-      pageSize: 13,
+      pageSize: 10,
+
+      addInterShow: false,
+      modifyInterShow: false,
+      modifyInterData: null,
     };
   },
   methods: {
@@ -97,10 +155,31 @@ export default {
         e.currentTarget.parentNode.parentNode.nextSibling.nextSibling.style.display = 'none';
       }
     },
+    modifyInterClicked(inter) {
+      this.modifyInterShow = true;
+      this.modifyInterData = { ...inter };
+    },
+    modifyInter(inter) {
+      console.log(inter);
+      this.modifyInterShow = false;
+      // TODO 修改面试
+    },
+    addInter(inter) {
+      console.log(inter);
+      this.addInterShow = false;
+      // TODO 添加面试
+    },
+    deleteInter(interId) {
+      this.$confirm('确定要删除面试吗?', (res) => {
+        if (res) {
+          // TODO 删除面试
+        }
+      });
+    },
   },
   components: {
     Page,
-    PositionDialog,
+    InterMgnDialog,
   },
 };
 </script>
@@ -115,11 +194,16 @@ export default {
     &::-webkit-scrollbar {
       display: none;
     }
+    .table-header {
+      position: sticky;
+      top: 0;
+    }
     .middle-container {
       box-sizing: border-box;
       padding: 10px;
       padding-left: 40px;
       background: rgb(238, 238, 238);
+      height: 100px;
       // display: none;
       .middle {
         text-align: left;

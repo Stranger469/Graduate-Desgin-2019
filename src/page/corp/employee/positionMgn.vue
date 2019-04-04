@@ -285,6 +285,7 @@ export default {
       padding: 10px;
       padding-left: 40px;
       background: rgb(238, 238, 238);
+      height: 100px;
       // display: none;
       .middle {
         text-align: left;

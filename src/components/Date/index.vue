@@ -399,7 +399,7 @@ export default {
     font-size: 0;
     input {
       font-size: 10px;
-      padding: 10px;
+      padding: 10px 7px;
       height: 30px;
       box-sizing: border-box;
       cursor: pointer;

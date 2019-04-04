@@ -46,7 +46,7 @@ export default{
 <style lang="less">
   .dialogBase{
     width:600px;
-    header{
+    &>header{
       box-sizing: border-box;
       height: 50px;
       display: flex;
