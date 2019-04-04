@@ -73,7 +73,7 @@
 import { emplMixin } from '@/mixins/NavigationGuards';
 import Page from '@/components/Pages/index';
 import PositionDialog from '@/components/Dialogs/addPosition';
-
+import api from '@/api/positionMgn'
 export default {
   mixins: [emplMixin],
   name: 'PositionMgn',
@@ -206,11 +206,18 @@ export default {
     };
   },
   mounted() {
-    this.tableData.forEach(() => {
-      this.expendRow.push(false);
-    });
+    this.getBJobsAndUser()
   },
   methods: {
+    getBJobsAndUser() {
+      this.tableData = [];
+      const params = new URLSearchParams();
+      params.append('recruiterId', sessionStorage.getItem('recruiterId'));
+      params.append('name', this.name);
+      api.getBJobsAndUserApi(params).then((response) => {
+
+      });
+    },
     setCurPage(page) {
       this.curPage = page;
     },

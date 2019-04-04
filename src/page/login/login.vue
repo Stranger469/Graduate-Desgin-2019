@@ -186,7 +186,6 @@ export default {
         id: that.$data.imgid,
         code: that.$data.graphicVerifyCode,
       }).then((response) => {
-        // 如果正确则发送短信验证码
         const params = new URLSearchParams();
         params.append('password', that.$data.psw);
         params.append('username', that.$data.tel);
@@ -196,9 +195,12 @@ export default {
             if (res.data.code !== 200) {
               that.pswWrong = '用户名或密码错误';
             } else {
+              console.log(response.data.data)
               sessionStorage.setItem('userToken', res.data.data.token);
               sessionStorage.setItem('loginType', that.loginType);
-              sessionStorage.setItem('companyId', response.data.data.bcompany.businessId);
+              sessionStorage.setItem('companyId', res.data.data.bcompany.businessId);
+              sessionStorage.setItem('recruiterId', res.data.data.recruiterId);
+              sessionStorage.setItem('userId', res.data.data.businessId);
               this.$router.push({ name: 'Empl' });
             }
           });
