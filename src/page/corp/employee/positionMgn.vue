@@ -73,7 +73,8 @@
 import { emplMixin } from '@/mixins/NavigationGuards';
 import Page from '@/components/Pages/index';
 import PositionDialog from '@/components/Dialogs/addPosition';
-import api from '@/api/positionMgn'
+import api from '@/api/positionMgn';
+
 export default {
   mixins: [emplMixin],
   name: 'PositionMgn',
@@ -195,7 +196,7 @@ export default {
 
       curPage: 1,
       total: 1000,
-      pageSize: 13,
+      pageSize: 10,
 
       addPositionShow: false,
       modifyPositionShow: false,
@@ -331,8 +332,17 @@ export default {
 
 .positionMgn {
   &>main {
+    position: relative;
     height: 701px;
-      .middle-container {
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    .table-header {
+      position: sticky;
+      top: 0;
+    }
+    .middle-container {
       box-sizing: border-box;
       padding: 10px;
       padding-left: 40px;
