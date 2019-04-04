@@ -197,18 +197,10 @@ export default {
       total: 1000,
       pageSize: 13,
 
-      show: false,
-      expendRow: [],
-
       addPositionShow: false,
       modifyPositionShow: false,
       modifyPositionData: null,
     };
-  },
-  mounted() {
-    this.tableData.forEach(() => {
-      this.expendRow.push(false);
-    });
   },
   methods: {
     setCurPage(page) {
@@ -264,14 +256,17 @@ export default {
 @import url(../../../../static/style/site.vars.less);
 
 .positionMgn {
-  .middle-container {
-    box-sizing: border-box;
-    padding: 10px;
-    padding-left: 40px;
-    background: rgb(238, 238, 238);
-    // display: none;
-    .middle {
-      text-align: left;
+  &>main {
+    height: 701px;
+      .middle-container {
+      box-sizing: border-box;
+      padding: 10px;
+      padding-left: 40px;
+      background: rgb(238, 238, 238);
+      // display: none;
+      .middle {
+        text-align: left;
+      }
     }
   }
   & > footer {
