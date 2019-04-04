@@ -73,7 +73,8 @@
 import { emplMixin } from '@/mixins/NavigationGuards';
 import Page from '@/components/Pages/index';
 import PositionDialog from '@/components/Dialogs/addPosition';
-import api from '@/api/positionMgn'
+import api from '@/api/positionMgn';
+
 export default {
   mixins: [emplMixin],
   name: 'PositionMgn',
@@ -203,7 +204,7 @@ export default {
     };
   },
   mounted() {
-    this.getBJobsAndUser()
+    this.getBJobsAndUser();
   },
   methods: {
     getBJobsAndUser() {
