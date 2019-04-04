@@ -29,8 +29,8 @@
                 <img @click="expend($event)" src="@/assets/img/u4210.png"/>
               </td>
               <td>{{ pos.name }}</td>
-              <td>{{ pos.city }}</td>
-              <td>{{ pos.edubg }}</td>
+              <td>{{ pos.cityName }}</td>
+              <td>{{ pos.eduName }}</td>
               <td>{{ pos.exp }}</td>
               <td>{{ pos.minSalary + '~' + pos.maxSalary + '元' }}</td>
               <td>{{ pos.loc }}</td>
@@ -82,116 +82,116 @@ export default {
     return {
       name: '',
       tableData: [
-        {
-          id: '10000',
-          name: '扫地1',
-          city: '广州',
-          edubg: '博士',
-          exp: '10年以上',
-          minSalary: '100',
-          maxSalary: '500',
-          loc: '白云山',
-          desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
-        },
-        {
-          id: '10001',
-          name: '扫地2',
-          city: '广州',
-          edubg: '博士',
-          exp: '10年以上',
-          minSalary: '100',
-          maxSalary: '500',
-          loc: '白云山',
-          desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
-        },
-        {
-          id: '10002',
-          name: '扫地3',
-          city: '广州',
-          edubg: '博士',
-          exp: '10年以上',
-          minSalary: '100',
-          maxSalary: '500',
-          loc: '白云山',
-          desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
-        },
-        {
-          id: '10003',
-          name: '扫地4',
-          city: '广州',
-          edubg: '博士',
-          exp: '10年以上',
-          minSalary: '100',
-          maxSalary: '500',
-          loc: '白云山',
-          desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
-        },
-        {
-          id: '10004',
-          name: '扫地5',
-          city: '广州',
-          edubg: '博士',
-          exp: '10年以上',
-          minSalary: '100',
-          maxSalary: '500',
-          loc: '白云山',
-          desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
-        },
-        {
-          id: '10005',
-          name: '扫地6',
-          city: '广州',
-          edubg: '博士',
-          exp: '10年以上',
-          minSalary: '100',
-          maxSalary: '500',
-          loc: '白云山',
-          desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
-        },
-        {
-          id: '10006',
-          name: '扫地7',
-          city: '广州',
-          edubg: '博士',
-          exp: '10年以上',
-          minSalary: '100',
-          maxSalary: '500',
-          loc: '白云山',
-          desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
-        },
-        {
-          id: '10007',
-          name: '扫地8',
-          city: '广州',
-          edubg: '博士',
-          exp: '10年以上',
-          minSalary: '100',
-          maxSalary: '500',
-          loc: '白云山',
-          desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
-        },
-        {
-          id: '10008',
-          name: '扫地9',
-          city: '广州',
-          edubg: '博士',
-          exp: '10年以上',
-          minSalary: '100',
-          maxSalary: '500',
-          loc: '白云山',
-          desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
-        },
-        {
-          id: '10009',
-          name: '扫地10',
-          city: '广州',
-          edubg: '博士',
-          exp: '10年以上',
-          minSalary: '100',
-          maxSalary: '500',
-          loc: '白云山',
-          desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
-        },
+        // {
+        //   id: '10000',
+        //   name: '扫地1',
+        //   city: '广州',
+        //   edubg: '博士',
+        //   exp: '10年以上',
+        //   minSalary: '100',
+        //   maxSalary: '500',
+        //   loc: '白云山',
+        //   desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
+        // },
+        // {
+        //   id: '10001',
+        //   name: '扫地2',
+        //   city: '广州',
+        //   edubg: '博士',
+        //   exp: '10年以上',
+        //   minSalary: '100',
+        //   maxSalary: '500',
+        //   loc: '白云山',
+        //   desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
+        // },
+        // {
+        //   id: '10002',
+        //   name: '扫地3',
+        //   city: '广州',
+        //   edubg: '博士',
+        //   exp: '10年以上',
+        //   minSalary: '100',
+        //   maxSalary: '500',
+        //   loc: '白云山',
+        //   desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
+        // },
+        // {
+        //   id: '10003',
+        //   name: '扫地4',
+        //   city: '广州',
+        //   edubg: '博士',
+        //   exp: '10年以上',
+        //   minSalary: '100',
+        //   maxSalary: '500',
+        //   loc: '白云山',
+        //   desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
+        // },
+        // {
+        //   id: '10004',
+        //   name: '扫地5',
+        //   city: '广州',
+        //   edubg: '博士',
+        //   exp: '10年以上',
+        //   minSalary: '100',
+        //   maxSalary: '500',
+        //   loc: '白云山',
+        //   desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
+        // },
+        // {
+        //   id: '10005',
+        //   name: '扫地6',
+        //   city: '广州',
+        //   edubg: '博士',
+        //   exp: '10年以上',
+        //   minSalary: '100',
+        //   maxSalary: '500',
+        //   loc: '白云山',
+        //   desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
+        // },
+        // {
+        //   id: '10006',
+        //   name: '扫地7',
+        //   city: '广州',
+        //   edubg: '博士',
+        //   exp: '10年以上',
+        //   minSalary: '100',
+        //   maxSalary: '500',
+        //   loc: '白云山',
+        //   desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
+        // },
+        // {
+        //   id: '10007',
+        //   name: '扫地8',
+        //   city: '广州',
+        //   edubg: '博士',
+        //   exp: '10年以上',
+        //   minSalary: '100',
+        //   maxSalary: '500',
+        //   loc: '白云山',
+        //   desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
+        // },
+        // {
+        //   id: '10008',
+        //   name: '扫地9',
+        //   city: '广州',
+        //   edubg: '博士',
+        //   exp: '10年以上',
+        //   minSalary: '100',
+        //   maxSalary: '500',
+        //   loc: '白云山',
+        //   desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
+        // },
+        // {
+        //   id: '10009',
+        //   name: '扫地10',
+        //   city: '广州',
+        //   edubg: '博士',
+        //   exp: '10年以上',
+        //   minSalary: '100',
+        //   maxSalary: '500',
+        //   loc: '白云山',
+        //   desc: '好多钱好多钱好多钱好多钱好多钱好多钱好多钱好多钱',
+        // },
       ],
 
       curPage: 1,
@@ -201,19 +201,67 @@ export default {
       addPositionShow: false,
       modifyPositionShow: false,
       modifyPositionData: null,
+      allCity:[],
     };
   },
   mounted() {
+    this.getCity();
     this.getBJobsAndUser();
   },
   methods: {
+    getCity() {
+      api.getCityApi().then((response) => {
+        this.allCity = response.data.data;
+      })
+    },
+    getEduName(id) {
+      switch (id){
+        case "0":
+          return "小学";
+        case "1":
+          return "初中";
+        case "2":
+          return "高中";
+        case "3":
+          return "专科";
+        case "4":
+          return "本科";
+        case "5":
+          return "研究生";
+        case "6":
+          return "博士";
+      }
+    },
+    getCityName(id) {
+      for(let i = 0 ; i < this.allCity.length ; i+=1) {
+        if(this.allCity[i].businessId === id){
+          return this.allCity[i].name;
+        }
+      }
+    },
     getBJobsAndUser() {
       this.tableData = [];
       const params = new URLSearchParams();
       params.append('recruiterId', sessionStorage.getItem('recruiterId'));
       params.append('name', this.name);
+      params.append('rows', this.pageSize);
+      params.append('page', this.curPage);
       api.getBJobsAndUserApi(params).then((response) => {
-
+        let datas = response.data.rows;
+        for(let i = 0 ; i < datas.length ; i += 1)
+        this.tableData.push({
+          id: datas[i].bjob.businessId,
+          name: datas[i].bjob.name,
+          city: datas[i].bjob.expectCity,
+          cityName: this.getCityName(datas[i].bjob.expectCity),
+          edubg: datas[i].bjob.educated,
+          eduName: this.getEduName(datas[i].bjob.educated),
+          exp: datas[i].bjob.experience,
+          minSalary: datas[i].bjob.minSalary,
+          maxSalary: datas[i].bjob.maxSalary,
+          loc: datas[i].bjob.cityDesc,
+          desc: datas[i].bjob.description,
+        })
       });
     },
     setCurPage(page) {
@@ -238,6 +286,20 @@ export default {
     addPosition(pos) {
       this.addPositionShow = false;
       // TODO 添加职位
+      const params = new URLSearchParams();
+      params.append('recruiterId', sessionStorage.getItem('recruiterId'));
+      params.append('name', this.name);
+      params.append('description', this.pageSize);
+      params.append('expectCity', this.curPage);
+      params.append('cityDesc', this.curPage);
+      params.append('educated', this.curPage);
+      params.append('experience', this.experience);
+      params.append('jobType', this.curPage);
+      params.append('minSalary', this.minSalary);
+      params.append('maxSalary', this.maxSalary);
+      api.getBJobsAndUserApi(params).then((response) => {
+
+      });
     },
     modifyPositionClicked(pos) {
       this.modifyPositionShow = true;
@@ -255,7 +317,7 @@ export default {
       });
     },
     findPos() {
-      // TODO 查找职位列表
+      this.getBJobsAndUser();
     },
   },
   components: {

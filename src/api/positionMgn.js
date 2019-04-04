@@ -9,16 +9,8 @@ export default {
       },
     });
   },
-  getAllDeptApi(p) {
-    return axi.get('/bdept/getAllDept', {
-      params: p,
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-      },
-    });
-  },
   addApi(p) {
-    return axi.post('/brecruiter/addAndUser', p, {
+    return axi.post('/bjob/add', p, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
       },
@@ -33,6 +25,13 @@ export default {
   },
   deleteApi(id) {
     return axi.delete(`/brecruiter/deleteLogical/${id}`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+    });
+  },
+  getCityApi() {
+    return axi.get('/ecity/queryECitys', {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
       },
